@@ -1,0 +1,6 @@
+Abel,250
+Sara,120
+Hannah,180
+Mahi,300
+Sam,80
+John,150
