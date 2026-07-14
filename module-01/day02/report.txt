@@ -1,0 +1,8 @@
+Transaction Summary
+-------------------
+Sam: ETB 80
+Mahi: ETB 300
+Abel: ETB 250
+Hannah: ETB 180
+John: ETB 150
+Sara: ETB 120
