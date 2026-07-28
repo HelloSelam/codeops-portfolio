@@ -111,8 +111,8 @@ class AccountFactory:
         else:
             raise ValueError("Unknown account type")
 
-# NEW FOR DAY 7
-# -----------------------------
+# Account Registry
+
 class AccountRegistry:
     def __init__(self):
         self.by_number = {}
@@ -135,9 +135,8 @@ class AccountRegistry:
         account = self.find(number)
         if account:
             account.deposit(amount)
-            if not hasattr(account, "history"):
-                account.history = []
             account.history.append(("deposit", amount))
+            account.history.append(("withdrawal", amount))
 
     def withdrawal(self, number, amount):
         account = self.find(number)
