@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Improvements</title>
+</head>
+<body>
+
+    <h1>Accessibility Example</h1>
+
+    <button type="button">Register Now</button>
+    <!--
+    Fix 1:
+    Using a real button makes it keyboard accessible and screen readers recognize it as a button.
+    -->
+
+    <br><br>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <!--
+    Fix 2:
+    Adding a label lets screen readers identify what information should be entered.
+    -->
+
+    <br><br>
+
+    <img
+        src="images/lalibela.jpg"
+        alt="Rock-hewn churches of Lalibela">
+    <!--
+    Fix 3:
+    Adding alt text describes the image for screen reader users if they cannot see it.
+    --> 
+
+</body>
+</html>
