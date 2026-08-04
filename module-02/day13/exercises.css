@@ -1,0 +1,140 @@
+/* Exercise 1 - CSS Variables */
+
+:root {
+    --primary-color: #008cba;
+    --secondary-color: #f4b400;
+    --spacing: 16px;
+    --main-font: Arial, Helvetica, sans-serif;
+}
+
+body {
+    font-family: var(--main-font);
+    margin: 20px;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: var(--spacing);
+    border: 2px solid var(--secondary-color);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    background-color: var(--secondary-color);
+    color: black;
+}
+
+
+/* Exercise 2 - Box Model */
+
+.card {
+    width: 300px;
+    padding: 24px;
+    border: 2px solid black;
+    margin: 20px 0;
+    background-color: #f5f5f5;
+}
+
+.content-box {
+    box-sizing: content-box;
+}
+
+.border-box {
+    box-sizing: border-box;
+}
+
+/* Exercise 3 - Specificity */
+
+p {
+    color: blue;
+}
+
+.highlight {
+    color: rgb(44, 222, 44);
+}
+
+#special {
+    color: red;
+}
+
+
+/* Exercise 4 - Table Styling */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+thead {
+    background-color:#0aa8dc;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e9e5e5d5;
+}
+
+
+/* Exercise 5 - Color Palette */
+
+.palette {
+    color: white;
+    padding: 16px;
+    margin: 10px 0;
+    width: 180px;
+    border-radius: 6px; 
+}
+
+/* Blue
+Hex: #3498db
+RGB: rgb(52,152,219)
+HSL: hsl(204,70%,53%)
+Hover: hsl(204,70%,63%)
+*/
+.blue {
+    background-color: rgb(52,152,219);
+}
+
+.blue:hover {
+    background-color: hsl(204, 70%, 63%);
+}
+
+/* Green
+Hex: #2ecc71
+RGB: rgb(46,204,113)
+HSL: hsl(145,63%,49%)
+Hover: hsl(145,63%,59%)
+*/
+
+.green {
+    background-color: rgb(46,204,113);
+}
+
+.green:hover {
+    background-color: hsl(145, 63%, 59%);
+}
+
+/* Gold
+Hex: #f1c40f
+RGB: rgb(241,196,15)
+HSL: hsl(48,89%,50%)
+Hover: hsl(48,89%,60%)
+*/
+
+.gold {
+    background-color: rgb(241,196,15);
+    color: black;
+}
+
+.gold:hover {
+    background-color: hsl(48, 89%, 60%);
+}
