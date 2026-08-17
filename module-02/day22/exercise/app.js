@@ -1,4 +1,5 @@
 const API = "https://open.er-api.com/v6/latest/ETB";
+const KEY = "birrwatch";
 
 
 const state = {
@@ -18,22 +19,37 @@ const result = document.querySelector("#result");
 const addBtn = document.querySelector("#watch");
 
 
+function save() {
+    localStorage.setItem(
+        KEY,
+        JSON.stringify({
+            watchlist: state.watchlist,
+            currency: state.currency
+        })
+    );
+}
+
+function load() {
+    const saved = localStorage.getItem(KEY);
+
+    if (saved) {
+        Object.assign(state, JSON.parse(saved));
+    }
+}
+
+
 async function loadRates() {
     status.textContent = "Loading rates…";
 
     try {
         const res = await fetch(API);
-
         if (!res.ok) {
             throw new Error("HTTP " + res.status);
         }
 
         const data = await res.json();
-
         state.rates = data.rates;
-
         status.textContent = "";
-
         render();
 
     } catch (err) {
@@ -41,14 +57,15 @@ async function loadRates() {
     }
 }
 
+
 function render() {
     const codes = Object.keys(state.rates);
-
     select.innerHTML = codes
         .map(code => `<option value="${code}">${code}</option>`)
         .join("");
 
     select.value = state.currency;
+    renderWatchlist();
 }
 
 
@@ -66,7 +83,6 @@ form.addEventListener("submit", (e) => {
     state.currency = select.value;
 
     const rate = state.rates[state.currency];
-
     const out = (amt * rate).toFixed(2);
 
     result.textContent =
@@ -75,7 +91,7 @@ form.addEventListener("submit", (e) => {
     save();
 });
 
-// Add currency to watchlist
+
 addBtn.addEventListener("click", () => {
     const currency = select.value;
 
@@ -84,11 +100,12 @@ addBtn.addEventListener("click", () => {
     }
 
     state.watchlist.push(currency);
-
+    
+    save();
     renderWatchlist();
 });
 
-// Render watchlist
+
 function renderWatchlist() {
     if (state.watchlist.length === 0) {
         watchUl.innerHTML = "<li>No currencies yet</li>";
@@ -109,19 +126,27 @@ function renderWatchlist() {
         .join("");
 }
 
-// Remove currency from watchlist
+
 watchUl.addEventListener("click", (e) => {
     if (!e.target.matches(".rm")) {
         return;
     }
 
     const currency = e.target.closest("li").dataset.c;
-
     state.watchlist =
         state.watchlist.filter(item => item !== currency);
 
+    save();    
     renderWatchlist();
 });
 
+
+async function init() {
+    load();
+    await loadRates();
+    render();
+}
+
+init();
 
 loadRates();
