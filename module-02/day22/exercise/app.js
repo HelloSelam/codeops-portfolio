@@ -15,6 +15,7 @@ const watchUl = document.querySelector("#watchlist");
 const form = document.querySelector("#convert-form");
 const amount = document.querySelector("#amount");
 const result = document.querySelector("#result");
+const addBtn = document.querySelector("#watch");
 
 
 async function loadRates() {
@@ -50,7 +51,7 @@ function render() {
     select.value = state.currency;
 }
 
-// Handle conversion
+
 form.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -72,6 +73,54 @@ form.addEventListener("submit", (e) => {
         `${amt} ETB = ${out} ${state.currency}`;
 
     save();
+});
+
+// Add currency to watchlist
+addBtn.addEventListener("click", () => {
+    const currency = select.value;
+
+    if (state.watchlist.includes(currency)) {
+        return;
+    }
+
+    state.watchlist.push(currency);
+
+    renderWatchlist();
+});
+
+// Render watchlist
+function renderWatchlist() {
+    if (state.watchlist.length === 0) {
+        watchUl.innerHTML = "<li>No currencies yet</li>";
+        return;
+    }
+
+    watchUl.innerHTML = state.watchlist
+        .map(currency => {
+            const rate = state.rates[currency];
+
+            return `
+                <li data-c="${currency}">
+                    <span>1 ETB = ${rate} ${currency}</span>
+                    <button class="rm" type="button">×</button>
+                </li>
+            `;
+        })
+        .join("");
+}
+
+// Remove currency from watchlist
+watchUl.addEventListener("click", (e) => {
+    if (!e.target.matches(".rm")) {
+        return;
+    }
+
+    const currency = e.target.closest("li").dataset.c;
+
+    state.watchlist =
+        state.watchlist.filter(item => item !== currency);
+
+    renderWatchlist();
 });
 
 
