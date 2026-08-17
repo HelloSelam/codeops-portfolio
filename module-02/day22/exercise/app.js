@@ -12,8 +12,11 @@ const state = {
 const status = document.querySelector("#status");
 const select = document.querySelector("#currency");
 const watchUl = document.querySelector("#watchlist");
+const form = document.querySelector("#convert-form");
+const amount = document.querySelector("#amount");
+const result = document.querySelector("#result");
 
-// Fetch live exchange rates
+
 async function loadRates() {
     status.textContent = "Loading rates…";
 
@@ -37,7 +40,6 @@ async function loadRates() {
     }
 }
 
-// Render the currency dropdown
 function render() {
     const codes = Object.keys(state.rates);
 
@@ -47,6 +49,30 @@ function render() {
 
     select.value = state.currency;
 }
+
+// Handle conversion
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const amt = Number(amount.value);
+
+    if (!amt || amt <= 0) {
+        result.textContent = "Enter a valid amount.";
+        return;
+    }
+
+    state.amount = amt;
+    state.currency = select.value;
+
+    const rate = state.rates[state.currency];
+
+    const out = (amt * rate).toFixed(2);
+
+    result.textContent =
+        `${amt} ETB = ${out} ${state.currency}`;
+
+    save();
+});
 
 
 loadRates();
