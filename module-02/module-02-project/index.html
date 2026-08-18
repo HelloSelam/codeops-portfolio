@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="Addis Eats - Ethiopian food ordering application"
+    >
+    <title>Addis Eats | Ethiopian Food</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-content">
+
+            <a href="#" class="logo" aria-label="Addis Eats home">
+                Addis Eats
+            </a>
+
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="#menu">Menu</a>
+                <a href="#cart">Cart</a>
+                <a href="#checkout">Checkout</a>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="container hero-content">
+
+                <p class="eyebrow">Taste of Ethiopia</p>
+
+                <h1>Authentic Ethiopian food, made for you.</h1>
+
+                <p class="hero-text">Browse our menu and discover your next favorite Ethiopian dish.</p>
+
+            </div>
+        </section>
+
+        <section id="menu" class="menu-section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <p class="eyebrow">Our Menu</p>
+                    <h2>Choose your favorite</h2>
+                    <p>Explore traditional Ethiopian dishes prepared with authentic flavors.</p>
+                </div>
+
+
+                <div class="menu-controls">
+
+                    <div class="search-group">
+                        <label for="search">Search dishes</label>
+
+                        <input
+                            type="search"
+                            id="search"
+                            name="search"
+                            placeholder="Search for a dish..."
+                        >
+                    </div>
+
+
+                    <div class="filter-group">
+
+                        <span class="filter-label">Categories</span>
+
+                        <div class="category-buttons">
+                            <button
+                                type="button"
+                                class="category-btn active"
+                                data-category="all"
+                            >
+                                All
+                            </button>
+
+                            <button
+                                type="button"
+                                class="category-btn"
+                                data-category="Main"
+                            >
+                                Main
+                            </button>
+
+                            <button
+                                type="button"
+                                class="category-btn"
+                                data-category="Vegetarian"
+                            >
+                                Vegetarian
+                            </button>
+
+                            <button
+                                type="button"
+                                class="category-btn"
+                                data-category="Breakfast"
+                            >
+                                Breakfast
+                            </button>
+
+                            <button
+                                type="button"
+                                class="category-btn"
+                                data-category="Side"
+                            >
+                                Side
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="menu-layout">
+
+                    <section class="menu-list-section" aria-labelledby="menu-heading">
+
+                        <div class="subsection-heading">
+                            <h2 id="menu-heading">Available dishes</h2>
+                            <span id="menu-count"></span>
+                        </div>
+
+                        <p id="loading-message" class="status-message">
+                            Loading menu...
+                        </p>
+
+                        <p id="error-message" class="status-message error-message hidden">
+                            We couldn't load the menu. Please try again.
+                        </p>
+
+                        <div id="menu-grid" class="menu-grid" aria-live="polite" >
+
+                            <!-- Temporary manual card for testing -->
+                            <article class="menu-card">
+
+                                <div class="menu-card-top">
+                                    <div>
+                                        <h3>Doro Wat</h3>
+                                        <p class="category">Main</p>
+                                    </div>
+                                    <p class="price">240 ETB</p>
+                                </div>
+
+                                <span class="spicy">
+                                    🌶 Spicy
+                                </span>
+
+                            </article>
+                    
+                        </div>
+
+                    </section>
+
+
+                    <aside
+                        id="cart"
+                        class="cart"
+                        aria-labelledby="cart-heading"
+                    >
+
+                        <div class="cart-header">
+                            <h2 id="cart-heading">Your Cart</h2>
+                            <span id="cart-count">0 items</span>
+                        </div>
+
+                        <div id="cart-items" class="cart-items">
+                            <p class="empty-cart">Your cart is empty.</p>
+                        </div>
+
+                        <div class="cart-summary">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <strong>0 ETB</strong>
+                            </div>
+
+                            <div class="summary-row">
+                                <span>Delivery</span>
+                                <strong>0 ETB</strong>
+                            </div>
+
+                            <div class="summary-total">
+                                <span>Total</span>
+                                <strong>0 ETB</strong>
+                            </div>
+
+                            <a href="#checkout" class="checkout-button">
+                                Checkout
+                            </a>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <section id="checkout" class="checkout-section">
+
+            <div class="container checkout-container">
+
+                <div class="section-heading">
+                    <p class="eyebrow">Almost there</p>
+                    <h2>Complete your order</h2>
+                    <p>Enter your delivery information to place your order.</p>
+                </div>
+
+
+                <form id="checkout-form" class="checkout-form">
+
+                    <div class="form-group">
+                        <label for="customer-name">Full name</label>
+                        <input
+                            type="text"
+                            id="customer-name"
+                            name="name"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customer-phone">Phone number</label>
+                        <input
+                            type="tel"
+                            id="customer-phone"
+                            name="phone"
+                            placeholder="09XXXXXXXX"
+                            autocomplete="tel"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="delivery-address">Delivery address</label>
+                        <textarea
+                            id="delivery-address"
+                            name="address"
+                            rows="4"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button">
+                        Place Order
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>
+                &copy; 2026 Addis Eats. Built for Addis Ababa.
+            </p>
+        </div>
+    </footer>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>

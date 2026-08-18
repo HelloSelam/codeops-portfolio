@@ -1,0 +1,521 @@
+/* =========================
+   RESET & BASE
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #faf8f3;
+    color: #29251f;
+    line-height: 1.6;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    width: min(1120px, 92%);
+    margin: 0 auto;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid #e7e0d5;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-content {
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #8b2f23;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #5d554b;
+}
+
+.main-nav a:hover {
+    color: #8b2f23;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    background: #eee3d1;
+    padding: 6rem 0;
+}
+
+.hero-content {
+    max-width: 750px;
+}
+
+.eyebrow {
+    margin-bottom: 0.5rem;
+    color: #9b5b2b;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    max-width: 700px;
+    margin-bottom: 1rem;
+    font-size: clamp(2.3rem, 6vw, 4.5rem);
+    line-height: 1.05;
+}
+
+.hero-text {
+    max-width: 600px;
+    color: #665e54;
+    font-size: 1.1rem;
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.menu-section {
+    padding: 5rem 0;
+}
+
+.section-heading {
+    margin-bottom: 2rem;
+}
+
+.section-heading h2 {
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+
+.section-heading > p:last-child {
+    color: #6d655b;
+}
+
+
+/* =========================
+   MENU CONTROLS
+========================= */
+
+.menu-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #e7e0d5;
+    border-radius: 14px;
+}
+
+.search-group {
+    flex: 1;
+}
+
+.search-group label,
+.filter-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.search-group input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #d8d0c4;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.search-group input:focus {
+    outline: 2px solid #c87935;
+    outline-offset: 2px;
+}
+
+.filter-group {
+    flex: 1;
+}
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.category-btn {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid #d8d0c4;
+    border-radius: 999px;
+    background: #fff;
+    color: #5d554b;
+    font-weight: 600;
+}
+
+.category-btn:hover,
+.category-btn.active {
+    background: #8b2f23;
+    border-color: #8b2f23;
+    color: #fff;
+}
+
+
+/* =========================
+   MENU + CART LAYOUT
+========================= */
+
+.menu-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.subsection-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.subsection-heading h2 {
+    font-size: 1.4rem;
+}
+
+#menu-count {
+    color: #756d62;
+    font-size: 0.9rem;
+}
+
+
+/* =========================
+   MENU CARDS
+========================= */
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.menu-card {
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #e7e0d5;
+    border-radius: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(50, 35, 20, 0.08);
+}
+
+.menu-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.menu-card h3 {
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
+}
+
+.category {
+    color: #8b8174;
+    font-size: 0.85rem;
+}
+
+.price {
+    color: #8b2f23;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.spicy {
+    display: inline-block;
+    margin-bottom: 1rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    background: #f8e6dc;
+    color: #9b3d23;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+
+/* =========================
+   CART
+========================= */
+
+.cart {
+    position: sticky;
+    top: 100px;
+    background: #fff;
+    border: 1px solid #e7e0d5;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.cart-header {
+    padding: 1.25rem;
+    border-bottom: 1px solid #e7e0d5;
+}
+
+.cart-header h2 {
+    margin-bottom: 0.2rem;
+    font-size: 1.25rem;
+}
+
+.cart-header span {
+    color: #756d62;
+    font-size: 0.85rem;
+}
+
+.cart-items {
+    min-height: 150px;
+    padding: 1.25rem;
+}
+
+.empty-cart {
+    color: #8a8278;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.cart-summary {
+    padding: 1.25rem;
+    background: #faf8f3;
+    border-top: 1px solid #e7e0d5;
+}
+
+.summary-row,
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.summary-row {
+    color: #6d655b;
+}
+
+.summary-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd4c8;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.checkout-button,
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: #8b2f23;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+}
+
+.checkout-button:hover,
+.submit-button:hover {
+    background: #70241b;
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+.checkout-section {
+    padding: 5rem 0;
+    background: #eee3d1;
+}
+
+.checkout-container {
+    max-width: 700px;
+}
+
+.checkout-form {
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #e7e0d5;
+    border-radius: 14px;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #d8d0c4;
+    border-radius: 8px;
+    background: #fff;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: 2px solid #c87935;
+    outline-offset: 2px;
+}
+
+
+/* =========================
+   STATES
+========================= */
+
+.status-message {
+    margin-bottom: 1rem;
+    color: #756d62;
+}
+
+.error-message {
+    color: #a33b2c;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+    padding: 2rem 0;
+    background: #29251f;
+    color: #d8d0c4;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 850px) {
+
+    .menu-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart {
+        position: static;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .header-content {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem 0;
+    }
+
+    .main-nav {
+        gap: 1rem;
+    }
+
+    .hero {
+        padding: 4rem 0;
+    }
+
+    .menu-section,
+    .checkout-section {
+        padding: 3rem 0;
+    }
+
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .category-buttons {
+        gap: 0.4rem;
+    }
+
+    .category-btn {
+        flex: 1;
+    }
+
+    .checkout-form {
+        padding: 1.25rem;
+    }
+
+}
