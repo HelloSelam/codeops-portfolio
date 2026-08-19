@@ -27,7 +27,7 @@ async function loadMenu() {
         }
 
         state.dishes = await response.json();
-        console.log("Menu loaded:", state.dishes);
+        renderMenu();
 
     } catch (error) {
         console.error("Menu loading error:", error);
@@ -37,5 +37,33 @@ async function loadMenu() {
     }
 }
 
+function renderMenu() {
+    loadingMessage.classList.add("hidden");
+    menuGrid.innerHTML = "";
+    menuCount.textContent = `${state.dishes.length} dishes`;
+
+    state.dishes.forEach((dish) => {
+        const card = document.createElement("article");
+        card.className = "menu-card";
+
+        card.innerHTML = `
+            <div class="menu-card-top">
+                <div>
+                    <h3>${dish.name}</h3>
+                    <p class="category">${dish.category}</p>
+                </div>
+                <p class="price">${dish.price} ETB</p>
+            </div>
+
+            ${dish.spicy ? `
+                <span class="spicy">
+                    🌶 Spicy
+                </span>
+            ` : ""}
+        `;
+
+        menuGrid.appendChild(card);
+    });
+}
 
 loadMenu();
