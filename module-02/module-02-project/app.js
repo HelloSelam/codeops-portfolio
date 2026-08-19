@@ -83,11 +83,120 @@ function renderMenu() {
                     🌶 Spicy
                 </span>
             ` : ""}
+
+            <button
+                type="button"
+                class="add-to-cart"
+                data-id="${dish.id}"
+            >
+                Add to Cart
+            </button>
         `;
 
         menuGrid.appendChild(card);
     });
 }
+
+
+function addToCart(dishId) {
+    const existingItem = state.cart.find(
+        (item) => item.id === dishId
+    );
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        state.cart.push({
+            id: dishId,
+            quantity: 1
+        });
+    }
+
+    renderCart();
+}
+
+
+
+function renderCart() {
+    cartItems.innerHTML = "";
+
+    if (state.cart.length === 0) {
+        cartItems.innerHTML = `
+            <p class="empty-cart">
+                Your cart is empty.
+            </p>
+        `;
+
+        cartCount.textContent = "0 items";
+        return;
+    }
+
+    let totalItems = 0;
+
+    state.cart.forEach((cartItem) => {
+        const dish = state.dishes.find(
+            (item) => item.id === cartItem.id
+        );
+
+        if (!dish) {
+            return;
+        }
+
+        totalItems += cartItem.quantity;
+
+        const item = document.createElement("div");
+        item.className = "cart-item";
+
+        item.innerHTML = `
+            <div class="cart-item-info">
+                <h3>${dish.name}</h3>
+                <p>${dish.price} ETB each</p>
+            </div>
+
+            <div class="cart-item-controls">
+                <button
+                    type="button"
+                    class="quantity-btn"
+                    data-action="decrease"
+                    data-id="${dish.id}"
+                >
+                    −
+                </button>
+
+                <span>${cartItem.quantity}</span>
+
+                <button
+                    type="button"
+                    class="quantity-btn"
+                    data-action="increase"
+                    data-id="${dish.id}"
+                >
+                    +
+                </button>
+
+            </div>
+        `;
+
+        cartItems.appendChild(item);
+    });
+
+    cartCount.textContent =
+        `${totalItems} ${totalItems === 1 ? "item" : "items"}`;
+}
+
+
+menuGrid.addEventListener("click", (event) => {
+    const button = event.target.closest(".add-to-cart");
+
+    if (!button) {
+        return;
+    }
+
+    const dishId = Number(button.dataset.id);
+    addToCart(dishId);
+
+    renderCart();
+});
 
 
 searchInput.addEventListener("input", (event) => {
