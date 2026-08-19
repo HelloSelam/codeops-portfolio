@@ -40,9 +40,32 @@ async function loadMenu() {
 function renderMenu() {
     loadingMessage.classList.add("hidden");
     menuGrid.innerHTML = "";
-    menuCount.textContent = `${state.dishes.length} dishes`;
+    
+    const filteredDishes = state.dishes.filter((dish) => {
+        const matchesSearch =
+            dish.name
+                .toLowerCase()
+                .includes(state.searchTerm.toLowerCase());
 
-    state.dishes.forEach((dish) => {
+        const matchesCategory =
+            state.category === "all" ||
+            dish.category === state.category;
+
+        return matchesSearch && matchesCategory;
+    });
+    
+    menuCount.textContent = `${filteredDishes.length} dishes`;
+
+    if (filteredDishes.length === 0) {
+        menuGrid.innerHTML = `
+            <p class="status-message">
+                No dishes found. Try another search.
+            </p>
+        `;
+        return;
+    }
+
+    filteredDishes.forEach((dish) => {
         const card = document.createElement("article");
         card.className = "menu-card";
 
@@ -65,5 +88,23 @@ function renderMenu() {
         menuGrid.appendChild(card);
     });
 }
+
+
+searchInput.addEventListener("input", (event) => {
+    state.searchTerm = event.target.value.trim();
+    renderMenu();
+});
+
+categoryButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        state.category = button.dataset.category;
+        categoryButtons.forEach((btn) => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        renderMenu();
+    });
+});
 
 loadMenu();
