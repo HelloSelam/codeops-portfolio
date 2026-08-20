@@ -116,6 +116,50 @@ function addToCart(dishId) {
 }
 
 
+function updateQuantity(dishId, change) {
+    const item = state.cart.find(
+        (item) => item.id === dishId
+    );
+
+    if (!item) {
+        return;
+    }
+
+    item.quantity += change;
+
+    if (item.quantity <= 0) {
+        state.cart = state.cart.filter(
+            (cartItem) => cartItem.id !== dishId
+        );
+    }
+
+    renderCart();
+}
+
+
+function removeFromCart(dishId) {
+    state.cart = state.cart.filter(
+        (item) => item.id !== dishId
+    );
+
+    renderCart();
+}
+
+
+function calculateSubtotal() {
+    return state.cart.reduce((total, cartItem) => {
+        const dish = state.dishes.find(
+            (item) => item.id === cartItem.id
+        );
+
+        if (!dish) {
+            return total;
+        }
+
+        return total + dish.price * cartItem.quantity;
+    }, 0);
+}
+
 
 function renderCart() {
     cartItems.innerHTML = "";
@@ -173,8 +217,16 @@ function renderCart() {
                 >
                     +
                 </button>
-
             </div>
+
+            <button
+                type="button"
+                class="remove-btn"
+                data-action="remove"
+                data-id="${dish.id}"
+            >
+                Remove
+            </button>
         `;
 
         cartItems.appendChild(item);
@@ -182,7 +234,51 @@ function renderCart() {
 
     cartCount.textContent =
         `${totalItems} ${totalItems === 1 ? "item" : "items"}`;
+
+    const subtotal = calculateSubtotal();
+    updateCartSummary(subtotal);
 }
+
+
+function updateCartSummary(subtotal) {
+    const deliveryFee = state.cart.length > 0 ? 50 : 0;
+    const total = subtotal + deliveryFee;
+    const summaryRows = document.querySelectorAll(
+        ".cart-summary .summary-row"
+    );
+
+    if (summaryRows.length >= 2) {
+        summaryRows[0].querySelector("strong").textContent =
+            `${subtotal} ETB`;
+        summaryRows[1].querySelector("strong").textContent =
+            `${deliveryFee} ETB`;
+    }
+
+    const totalElement = document.querySelector(
+        ".summary-total strong"
+    );
+
+    totalElement.textContent = `${total} ETB`;
+}
+
+
+searchInput.addEventListener("input", (event) => {
+    state.searchTerm = event.target.value.trim();
+    renderMenu();
+});
+
+
+categoryButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        state.category = button.dataset.category;
+        categoryButtons.forEach((btn) => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        renderMenu();
+    });
+});
 
 
 menuGrid.addEventListener("click", (event) => {
@@ -199,21 +295,25 @@ menuGrid.addEventListener("click", (event) => {
 });
 
 
-searchInput.addEventListener("input", (event) => {
-    state.searchTerm = event.target.value.trim();
-    renderMenu();
+cartItems.addEventListener("click", (event) => {
+    const button = event.target.closest("button");
+
+    if (!button) {
+        return;
+    }
+
+    const dishId = Number(button.dataset.id);
+    const action = button.dataset.action;
+
+    if (action === "increase") {
+        updateQuantity(dishId, 1);
+    } else if (action === "decrease") {
+        updateQuantity(dishId, -1);
+    } else if (action === "remove") {
+        removeFromCart(dishId);
+    }
 });
 
-categoryButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        state.category = button.dataset.category;
-        categoryButtons.forEach((btn) => {
-            btn.classList.remove("active");
-        });
 
-        button.classList.add("active");
-        renderMenu();
-    });
-});
 
 loadMenu();
