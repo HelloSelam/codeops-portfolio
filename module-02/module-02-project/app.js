@@ -199,6 +199,7 @@ function renderCart() {
         `;
 
         cartCount.textContent = "0 items";
+        updateCartSummary(0);
         return;
     }
 
@@ -215,10 +216,10 @@ function renderCart() {
 
         totalItems += cartItem.quantity;
 
-        const item = document.createElement("div");
-        item.className = "cart-item";
+        const cartItemElement = document.createElement("div");
+        cartItemElement.className = "cart-item";
 
-        item.innerHTML = `
+        cartItemElement.innerHTML = `
             <div class="cart-item-info">
                 <h3>${dish.name}</h3>
                 <p>${dish.price} ETB each</p>
@@ -256,7 +257,7 @@ function renderCart() {
             </button>
         `;
 
-        cartItems.appendChild(item);
+        cartItems.appendChild(cartItemElement);
     });
 
     cartCount.textContent =
@@ -274,12 +275,11 @@ function updateCartSummary(subtotal) {
         ".cart-summary .summary-row"
     );
 
-    if (summaryRows.length >= 2) {
-        summaryRows[0].querySelector("strong").textContent =
-            `${subtotal} ETB`;
-        summaryRows[1].querySelector("strong").textContent =
-            `${deliveryFee} ETB`;
-    }
+    summaryRows[0].querySelector("strong").textContent =
+        `${subtotal} ETB`;
+
+    summaryRows[1].querySelector("strong").textContent =
+        `${deliveryFee} ETB`;
 
     const totalElement = document.querySelector(
         ".summary-total strong"
@@ -317,8 +317,6 @@ menuGrid.addEventListener("click", (event) => {
 
     const dishId = Number(button.dataset.id);
     addToCart(dishId);
-
-    renderCart();
 });
 
 
@@ -339,6 +337,31 @@ cartItems.addEventListener("click", (event) => {
     } else if (action === "remove") {
         removeFromCart(dishId);
     }
+});
+
+
+
+checkoutForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!checkoutForm.checkValidity()) {
+        checkoutForm.reportValidity();
+        return;
+    }
+
+
+    if (state.cart.length === 0) {
+        alert("Your cart is empty. Please add an item first.");
+        return;
+    }
+
+    alert("Order placed successfully!");
+
+    state.cart = [];
+    saveCart();
+    renderCart();
+
+    checkoutForm.reset();
 });
 
 
