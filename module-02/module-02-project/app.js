@@ -98,6 +98,30 @@ function renderMenu() {
 }
 
 
+const CART_KEY = "addisEatsCart";
+
+function saveCart() {
+    localStorage.setItem(
+        CART_KEY,
+        JSON.stringify(state.cart)
+    );
+}
+
+function loadCart() {
+    const savedCart = localStorage.getItem(CART_KEY);
+    if (!savedCart) {
+        return;
+    }
+    try {
+        state.cart = JSON.parse(savedCart);
+    } catch (error) {
+
+        console.error("Could not load saved cart:", error);
+        state.cart = [];
+    }
+}
+
+
 function addToCart(dishId) {
     const existingItem = state.cart.find(
         (item) => item.id === dishId
@@ -112,6 +136,7 @@ function addToCart(dishId) {
         });
     }
 
+    saveCart();
     renderCart();
 }
 
@@ -133,6 +158,7 @@ function updateQuantity(dishId, change) {
         );
     }
 
+    saveCart();
     renderCart();
 }
 
@@ -142,6 +168,7 @@ function removeFromCart(dishId) {
         (item) => item.id !== dishId
     );
 
+    saveCart();
     renderCart();
 }
 
@@ -315,5 +342,10 @@ cartItems.addEventListener("click", (event) => {
 });
 
 
+async function init() {
+    loadCart();
+    await loadMenu();
+    renderCart();
+}
 
-loadMenu();
+init();
