@@ -349,11 +349,27 @@ checkoutForm.addEventListener("submit", (event) => {
         return;
     }
 
+    const fullName = document.querySelector("#customer-name").value.trim();
+    const nameRegex = /^[A-Za-z]+(?:\s+[A-Za-z]+)+$/;
+
+    if (!nameRegex.test(fullName)) {
+        alert("Please enter a valid full name using letters only.");
+        return;
+    }
+
+    const phone = document.querySelector("#customer-phone").value.trim();
+    const ethiopianPhoneRegex = /^(09|\+2519)[0-9]{8}$/;
+
+    if (!ethiopianPhoneRegex.test(phone)) {
+        alert("Please enter a valid Ethiopian phone number.");
+        return;
+    }
 
     if (state.cart.length === 0) {
         alert("Your cart is empty. Please add an item first.");
         return;
     }
+
 
     alert("Order placed successfully!");
 
