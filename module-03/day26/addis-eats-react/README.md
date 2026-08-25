@@ -12,27 +12,27 @@ A simple static Addis Eats menu built with React and Vite as part of the React i
 
 ## How to Run
 
-1. Clone the repository.
+### 1. Clone the repository.
 
-2. Navigate to the project folder:
+### 2. Navigate to the project folder:
 
 ```bash
 cd module-03/day26/addis-eats-react
 ```
 
-# 3. Install the dependencies:
+## 3. Install the dependencies:
 
 ```bash
 npm install
 ```
 
-4. Start the development server:
+### 4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-5. Open the local URL provided by Vite in your browser.
+### 5. Open the local URL provided by Vite in your browser.
 
 ## Project Structure
 
