@@ -36,8 +36,10 @@ npm run dev
 
 ## Project Structure
 
-  src/
-  ├── App.jsx
-  ├── Header.jsx
-  ├── Dish.jsx
-  └── main.jsx
+```bash
+src/
+├── App.jsx
+├── Header.jsx
+├── Dish.jsx
+└── main.jsx
+```
