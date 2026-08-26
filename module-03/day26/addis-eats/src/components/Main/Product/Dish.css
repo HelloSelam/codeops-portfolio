@@ -1,0 +1,10 @@
+.dish {
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}

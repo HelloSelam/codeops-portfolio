@@ -1,5 +1,6 @@
-import Header from "./Header";
-import Dish from "./Dish";
+import React from 'react'
+import './Product.css'
+import Dish from './Dish'
 
 const dishes = [
   { id: 1, name: "Doro Wat", price: 350 },
@@ -8,14 +9,12 @@ const dishes = [
   { id: 4, name: "Tibs", price: 400 },
 ];
 
-function App() {
+function Product() {
   return (
-    <>
-      <Header />
-
-      <main>
-        <h2>Our Menu</h2>
-
+    <div className='menu'>
+      <h2>Menu</h2>
+    
+      <div className="dish-list">
         {dishes.map((dish) => (
           <Dish
             key={dish.id}
@@ -23,9 +22,9 @@ function App() {
             price={dish.price}
           />
         ))}
-      </main>
-    </>
-  );
+      </div>
+    </div>
+  )
 }
 
-export default App;
+export default Product
