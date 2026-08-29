@@ -35,6 +35,7 @@ src/
             ├── Product.css
             ├── Dish.jsx
             └── Dish.css
+            └── Card.jsx
 ```
 
 ## How to Run
@@ -43,7 +44,7 @@ src/
 ### 2. Navigate to the Addis Eats React project:
 
 ```bash
-cd codeops-portfolio/module-03/day26/addis-eats
+cd codeops-portfolio/module-03/day27/addis-eats
 ```
 
 ### 3. Install the dependencies:

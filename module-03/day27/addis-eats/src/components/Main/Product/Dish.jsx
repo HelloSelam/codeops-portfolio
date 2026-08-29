@@ -1,15 +1,16 @@
 import PropTypes from "prop-types";
+import Card from './Card';
 import "./Dish.css";
 
-const Dish = ({ name, price, spicy, currency }) => {
+function Dish ({ name, price, spicy, currency }) {
   return (
-    <article className="dish">
+    <card className="dish">
       <h3>{name}</h3>
       {spicy === true && (
         <span className="spicy-badge">Spicy 🌶️</span>
       )}
       <p>{price} {currency}</p>
-    </article>
+    </card>
   );
 };
 
