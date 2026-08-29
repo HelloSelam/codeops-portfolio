@@ -4,13 +4,15 @@ import "./Dish.css";
 
 function Dish ({ name, price, spicy, currency }) {
   return (
-    <card className="dish">
-      <h3>{name}</h3>
-      {spicy === true && (
-        <span className="spicy-badge">Spicy 🌶️</span>
-      )}
-      <p>{price} {currency}</p>
-    </card>
+    <Card>
+      <div className="dish">
+        <h3>{name}</h3>
+        {spicy === true && (
+          <span className="spicy-badge">Spicy 🌶️</span>
+        )}
+        <p>{price} {currency}</p>
+      </div>
+    </Card>
   );
 };
 
