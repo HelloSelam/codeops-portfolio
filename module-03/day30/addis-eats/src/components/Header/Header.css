@@ -1,0 +1,41 @@
+header {
+  background-color: #b19319;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr; 
+  align-items: center;
+}
+
+.header-info {
+  grid-column: 2; 
+}
+
+.header-info h1 {
+  font-family: Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.header-info p {
+  font-family: 'Inter', 'Helvetica Neue', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+
+}
+
+.cart-badge { 
+  grid-column: 3;
+  justify-self: end; 
+  align-self: end;
+  background-color: #333;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 15px;
+  color: #ffff;
+}
