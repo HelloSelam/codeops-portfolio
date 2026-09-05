@@ -1,0 +1,35 @@
+.dish {
+  height: 100%;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dish button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+.dish p {
+  margin: 8px 0;
+}
+
+.spicy-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #ffdddd;
+  color: #c00;
+  font-weight: bold;
+}
