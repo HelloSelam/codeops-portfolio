@@ -3,9 +3,13 @@ import { Link, Outlet } from "react-router-dom";
 function Layout() {
   return (
     <>
-      <header>
+      <header className="site-header">
+        <Link to="/" className="logo">
+          Addis Eats
+        </Link>
+
         <nav>
-          <Link to="/">Addis Eats</Link>
+          <Link to="/">Home</Link>
           <Link to="/menu">Menu</Link>
           <Link to="/cart">Cart</Link>
         </nav>
@@ -15,8 +19,8 @@ function Layout() {
         <Outlet />
       </main>
 
-      <footer>
-        <p>© 2026 Addis Eats</p>
+      <footer className="site-footer">
+        <p>Made with love in Addis Ababa.</p>
       </footer>
     </>
   );

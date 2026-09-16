@@ -1,0 +1,254 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  --cream: #f8f3e8;
+  --dark-brown: #2d211b;
+  --red: #a63d2f;
+  --gold: #c89b3c;
+  --green: #315c45;
+  --white: #ffffff;
+  --muted: #756a61;
+  --border: #e5dccd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 6%;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: "Instrument Serif", serif;
+  font-size: 2rem;
+  color: var(--red);
+}
+
+.site-header nav {
+  display: flex;
+  gap: 28px;
+}
+
+.site-header nav a {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.site-footer {
+  margin-top: 80px;
+  padding: 30px 6%;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--dark-brown);
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Instrument Serif", serif;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.menu-page {
+  width: min(1200px, 88%);
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+.menu-intro {
+  max-width: 700px;
+  margin-bottom: 50px;
+}
+
+.eyebrow {
+  margin-bottom: 16px;
+  color: var(--red);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.menu-intro h1 {
+  margin: 0 0 20px;
+  font-size: clamp(3rem, 6vw, 5rem);
+  line-height: 0.95;
+  font-weight: 400;
+}
+
+.menu-intro > p:last-child {
+  max-width: 580px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.menu-search {
+  margin-bottom: 24px;
+}
+
+.menu-search input {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px 20px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  outline: none;
+  background: var(--white);
+  color: var(--dark-brown);
+}
+
+.menu-search input:focus {
+  border-color: var(--red);
+}
+
+.category-bar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.category-bar button {
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dark-brown);
+  cursor: pointer;
+}
+
+.category-bar button.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+
+.dish-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: 0 12px 30px rgba(45, 33, 27, 0.06);
+}
+
+.dish-image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background: #e8dfd0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.special-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--dark-brown);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.dish-content {
+  padding: 24px;
+}
+
+.dish-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.dish-heading h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.dish-name-am {
+  margin: 5px 0 0;
+  color: var(--muted);
+}
+
+.dish-price {
+  white-space: nowrap;
+  color: var(--red);
+  font-weight: 700;
+}
+
+.dish-description {
+  margin: 18px 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.dish-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dish-footer a {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.dish-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #e4eee7;
+  color: var(--green);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.dish-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .menu-page {
+    padding: 50px 0;
+  }
+
+  .dish-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .menu-intro h1 {
+    font-size: 3.2rem;
+  }
+}
