@@ -52,29 +52,54 @@ function DishDetail() {
   }
 
   return (
-    <section>
-      <Link to="/menu">← Back to menu</Link>
+    <section className="dish-detail">
+      <Link to="/menu" className="back-link">
+        ← Back to menu
+      </Link>
 
-      <h1>{dish.nameEn}</h1>
-      <p>{dish.nameAm}</p>
+      <div className="dish-detail-layout">
+        <div className="dish-detail-image">
+          <span>Food Image</span>
+        </div>
 
-      <p>{dish.description}</p>
+        <div className="dish-detail-content">
+          <p className="eyebrow">{dish.category}</p>
 
-      <p>Price: {dish.priceETB} ETB</p>
-      <p>Spice level: {dish.spiceLevel}</p>
-      <p>{dish.servings}</p>
+          <h1>{dish.nameEn}</h1>
 
-      <h2>Ingredients</h2>
+          <p className="dish-name-am">{dish.nameAm}</p>
 
-      <ul>
-        {dish.ingredients.map((ingredient) => (
-          <li key={ingredient}>{ingredient}</li>
-        ))}
-      </ul>
+          <p className="dish-detail-description">
+            {dish.description}
+          </p>
 
-      <button onClick={() => addToCart(dish)}>
-        Add to Cart
-      </button>
+          <div className="dish-meta">
+            <span>{dish.priceETB} ETB</span>
+            <span>{dish.servings}</span>
+          </div>
+
+          <p>{dish.spiceLevel}</p>
+
+          {dish.isFasting && (
+            <span className="dish-tag">Fasting</span>
+          )}
+
+          <h2>Ingredients</h2>
+
+          <ul>
+            {dish.ingredients.map((ingredient) => (
+              <li key={ingredient}>{ingredient}</li>
+            ))}
+          </ul>
+
+          <button
+            className="primary-button"
+            onClick={() => addToCart(dish)}
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
     </section>
   );
 }

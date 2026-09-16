@@ -2,7 +2,7 @@ import DishCard from "./DishCard";
 
 function DishList({ dishes }) {
   return (
-    <div>
+    <div className="dish-grid">
       {dishes.map((dish) => (
         <DishCard key={dish.id} dish={dish} />
       ))}

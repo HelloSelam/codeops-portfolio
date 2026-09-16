@@ -21,26 +21,53 @@ function Cart() {
 
   return (
     <section>
-      <h1>Your Cart</h1>
+      <div className="cart-header">
+        <div>
+          <p className="eyebrow">YOUR ORDER</p>
+          <h1>Your Cart</h1>
+        </div>
 
-      {cart.map((item) => (
-        <article key={item.id}>
-          <h2>{item.nameEn}</h2>
+        <button onClick={clearCart}>Clear cart</button>
+      </div>
 
-          <p>{item.quantity} × {item.priceETB} ETB</p>
-          <p>{item.priceETB * item.quantity} ETB</p>
+      <div className="cart-layout">
+        <div className="cart-items">
 
-          <button onClick={() => removeFromCart(item.id)}>
-            Remove
-          </button>
-        </article>
-      ))}
+          {cart.map((item) => (
+            <article className="cart-item" key={item.id}>
+              <div>
+                <h2>{item.nameEn}</h2>
+                <p>{item.priceETB} ETB each</p>
+              </div>
 
-      <h2>Total: {total} ETB</h2>
+              <div className="cart-item-right">
+                
+                <strong>
+                  {item.quantity} ×
+                </strong>
 
-      <button onClick={clearCart}>Clear cart</button>
+                <strong>
+                  {item.priceETB * item.quantity} ETB
+                </strong>
 
-      <Link to="/checkout">Proceed to checkout</Link>
+                <button onClick={() => removeFromCart(item.id)}>
+                  Remove
+                </button>
+
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <aside className="cart-summary">
+          <p>Total</p>
+          <h2>{total} ETB</h2>
+
+          <Link to="/checkout" className="primary-button">
+            Proceed to checkout
+          </Link>
+        </aside>
+      </div>
     </section>
   );
 }

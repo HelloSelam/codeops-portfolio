@@ -2,22 +2,41 @@ import { Link } from "react-router-dom";
 
 function DishCard({ dish }) {
   return (
-    <article>
-      <h2>{dish.nameEn}</h2>
+    <article className="dish-card">
+      <div className="dish-image">
+        <span>Food Image</span>
 
-      <p>{dish.nameAm}</p>
+        {dish.isSpecial && (
+          <span className="special-badge">Special</span>
+        )}
+      </div>
 
-      <p>{dish.description}</p>
+      <div className="dish-content">
+        <div className="dish-heading">
+          <div>
+            <h2>{dish.nameEn}</h2>
+            <p className="dish-name-am">{dish.nameAm}</p>
+          </div>
 
-      <p>{dish.priceETB} ETB</p>
+          <span className="dish-price">
+            {dish.priceETB} ETB
+          </span>
+        </div>
 
-      {dish.isFasting && <span>Fasting</span>}
+        <p className="dish-description">
+          {dish.description}
+        </p>
 
-      {dish.isSpecial && <span>Today's Special</span>}
+        <div className="dish-footer">
+          {dish.isFasting && (
+            <span className="dish-tag">Fasting</span>
+          )}
 
-      <Link to={`/menu/${dish.id}`}>
-        View dish
-      </Link>
+          <Link to={`/menu/${dish.id}`}>
+            View dish →
+          </Link>
+        </div>
+      </div>
     </article>
   );
 }
