@@ -1,31 +1,14 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DishCard from "./menu/DishCard";
+import useFetch from "./hooks/useFetch";
 
 function Home() {
-  const [specials, setSpecials] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {
+    data: specials,
+    loading,
+    error,
+  } = useFetch("/specials.json");
 
-  useEffect(() => {
-    fetch("/specials.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to load specials");
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        setSpecials(data.data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
 
   return (
     <div className="home-page">

@@ -1,37 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useFetch from "../hooks/useFetch";
 import { useSearchParams } from "react-router-dom";
 import CategoryBar from "./CategoryBar";
 import DishList from "./DishList";
 
 function Menu() {
-  const [dishes, setDishes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {
+    data: dishes,
+    loading,
+    error,
+  } = useFetch("/menu.json");
+
   const [searchTerm, setSearchTerm] = useState("");
-
   const [searchParams] = useSearchParams();
-
   const selectedCategory = searchParams.get("category") || "All";
-
-  useEffect(() => {
-    fetch("/menu.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to load the menu");
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        setDishes(data.data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
 
   if (loading) {
     return <p className="status-message">Loading menu...</p>;
