@@ -4,7 +4,7 @@ import { useCart } from "../cart/CartProvider";
 import { validateCheckout } from "./validate";
 
 function Checkout() {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
 
   const [form, setForm] = useState({
     name: "",
@@ -37,6 +37,7 @@ function Checkout() {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
+      clearCart();
       setSubmitted(true);
     }
   }

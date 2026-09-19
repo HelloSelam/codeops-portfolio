@@ -5,9 +5,11 @@ import Menu from "./menu/Menu";
 import DishDetail from "./menu/DishDetail";
 import Cart from "./Cart";
 import NotFound from "./NotFound";
-import Checkout from "./checkout/Checkout";
 import SignIn from "./auth/SignIn";
 import RequireAuth from "./auth/RequireAuth";
+import { lazy, Suspense } from "react";
+
+const Checkout = lazy(() => import("./checkout/Checkout"));
 
 function App() {
   return (
@@ -18,11 +20,16 @@ function App() {
         <Route path="menu/:id" element={<DishDetail />} />
         <Route path="cart" element={<Cart />} />
         <Route path="*" element={<NotFound />} />
-        <Route path="checkout" element={
+        <Route
+          path="checkout"
+          element={
             <RequireAuth>
-              <Checkout />
+              <Suspense fallback={<p>Loading checkout...</p>}>
+                <Checkout />
+              </Suspense>
             </RequireAuth>
-          }/>
+          }
+        />
         <Route path="signin" element={<SignIn />} />
       </Route>
     </Routes>
