@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 const CartContext = createContext();
 
@@ -20,6 +20,28 @@ function cartReducer(state, action) {
       return [...state, { ...action.payload, quantity: 1 }];
     }
 
+    case "INCREASE_ITEM":
+      return state.map((item) =>
+        item.id === action.payload
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+          : item
+      );
+
+    case "DECREASE_ITEM":
+      return state
+        .map((item) =>
+          item.id === action.payload
+            ? {
+                ...item,
+                quantity: item.quantity - 1,
+              }
+            : item
+        )
+        .filter((item) => item.quantity > 0);
+
     case "REMOVE_ITEM":
       return state.filter((item) => item.id !== action.payload);
 
@@ -32,12 +54,40 @@ function cartReducer(state, action) {
 }
 
 export function CartProvider({ children }) {
-  const [cart, dispatch] = useReducer(cartReducer, []);
+  const [cart, dispatch] = useReducer(cartReducer, [],
+    () => {
+      const savedCart =
+        localStorage.getItem("addis-eats-cart");
+
+      return savedCart ? JSON.parse(savedCart) : [];
+    }
+  );
+
+  useEffect(() => {
+    localStorage.setItem(
+      "addis-eats-cart",
+      JSON.stringify(cart)
+    );
+  }, [cart]);
 
   function addToCart(dish) {
     dispatch({
       type: "ADD_ITEM",
       payload: dish,
+    });
+  }
+
+  function increaseItem(id) {
+    dispatch({
+      type: "INCREASE_ITEM",
+      payload: id,
+    });
+  }
+
+  function decreaseItem(id) {
+    dispatch({
+      type: "DECREASE_ITEM",
+      payload: id,
     });
   }
 
@@ -59,6 +109,8 @@ export function CartProvider({ children }) {
       value={{
         cart,
         addToCart,
+        increaseItem,
+        decreaseItem,
         removeFromCart,
         clearCart,
       }}

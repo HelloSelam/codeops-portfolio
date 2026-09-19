@@ -2,32 +2,45 @@ import { Link } from "react-router-dom";
 import { useCart } from "./cart/CartProvider";
 
 function Cart() {
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { cart, removeFromCart, increaseItem, decreaseItem, clearCart } = useCart();
 
   const total = cart.reduce(
     (sum, item) => sum + item.priceETB * item.quantity,
     0
   );
 
+  const totalItems = cart.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
   if (cart.length === 0) {
     return (
-      <section>
+      <section className="empty-cart">
+        <p className="eyebrow">YOUR ORDER</p>
         <h1>Your Cart</h1>
-        <p>Your cart is empty.</p>
-        <Link to="/menu">Browse the menu</Link>
+        <p>
+          Looks like you haven't added anything yet.
+          Explore our menu and find something delicious.
+        </p>
+        <Link to="/menu" className="primary-button">Browse the menu</Link>
       </section>
     );
   }
 
   return (
-    <section>
+    <section className="cart-page">
       <div className="cart-header">
         <div>
           <p className="eyebrow">YOUR ORDER</p>
           <h1>Your Cart</h1>
+          <p className="cart-item-count">
+            {totalItems}{" "}
+            {totalItems === 1 ? "item" : "items"}
+          </p>
         </div>
 
-        <button onClick={clearCart}>Clear cart</button>
+        <button onClick={clearCart} className="clear-cart-button">Clear cart</button>
       </div>
 
       <div className="cart-layout">
@@ -35,37 +48,89 @@ function Cart() {
 
           {cart.map((item) => (
             <article className="cart-item" key={item.id}>
-              <div>
-                <h2>{item.nameEn}</h2>
-                <p>{item.priceETB} ETB each</p>
+              <div className="cart-item-image">
+                <span>Food Image</span>
               </div>
 
-              <div className="cart-item-right">
-                
-                <strong>
-                  {item.quantity} ×
-                </strong>
+              <div className="cart-item-info">
+                <p className="eyebrow">
+                  {item.category}
+                </p>
+
+                <h2>{item.nameEn}</h2>
+
+                <p className="cart-item-price">
+                  {item.priceETB} ETB each
+                </p>
+
+                <button onClick={() => removeFromCart(item.id)} className="remove-button">
+                  Remove
+                </button>
+              </div>
+
+              <div className="cart-item-actions">
+
+                <div className="quantity-control">
+                  <button
+                    onClick={() =>
+                      decreaseItem(item.id)
+                    }
+                    aria-label={`Decrease ${item.nameEn} quantity`}
+                  >
+                    −
+                  </button>
+
+                  <span>{item.quantity}</span>
+
+                  <button
+                    onClick={() =>
+                      increaseItem(item.id)
+                    }
+                    aria-label={`Increase ${item.nameEn} quantity`}
+                  >
+                    +
+                  </button>
+                </div>
 
                 <strong>
                   {item.priceETB * item.quantity} ETB
                 </strong>
-
-                <button onClick={() => removeFromCart(item.id)}>
-                  Remove
-                </button>
-
               </div>
             </article>
           ))}
         </div>
 
         <aside className="cart-summary">
-          <p>Total</p>
-          <h2>{total} ETB</h2>
+          <p className="eyebrow">ORDER SUMMARY</p>
+
+          <div className="summary-row">
+            <span>Items</span>
+            <span>{totalItems}</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Subtotal</span>
+            <span>{total} ETB</span>
+          </div>
+
+          <div className="summary-divider"></div>
+
+          <div className="summary-total">
+            <span>Total</span>
+            <strong>{total} ETB</strong>
+          </div>
 
           <Link to="/checkout" className="primary-button">
             Proceed to checkout
           </Link>
+
+          <Link
+            to="/menu"
+            className="continue-shopping"
+          >
+            ← Continue shopping
+          </Link>
+
         </aside>
       </div>
     </section>

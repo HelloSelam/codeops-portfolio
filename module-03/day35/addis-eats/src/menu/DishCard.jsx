@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../cart/CartProvider";
 
 function DishCard({ dish }) {
+  const { addToCart } = useCart();
+
   return (
     <article className="dish-card">
       <div className="dish-image">
@@ -36,6 +39,13 @@ function DishCard({ dish }) {
             View dish →
           </Link>
         </div>
+
+        <button
+          className="primary-button card-cart-button"
+          onClick={() => addToCart(dish)}
+        >
+          Add to Cart
+        </button>
       </div>
     </article>
   );
