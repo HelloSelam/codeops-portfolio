@@ -1,10 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
-import { useCart } from "./cart/CartProvider";
+import useCartStore from "./cart/cartStore";
 import { useAuth } from "./auth/AuthProvider";
 
 
 function Layout() {
-  const { cart } = useCart();
+  const cart = useCartStore((state) => state.cart);
   const { user, signOut } = useAuth();
 
   const cartCount = cart.reduce(
@@ -24,12 +24,16 @@ function Layout() {
 
           <Link to="/menu">Menu</Link>
 
-          <Link to="/cart">
-            Cart
+          <Link to="/cart"
+            className="cart-link"
+            aria-label={`Shopping cart with ${cartCount} items`}
+          > 
+            <span className="cart-icon" aria-hidden="true">
+              🛒
+            </span>
+              
             {cartCount > 0 && (
-              <span className="cart-count">
-                {cartCount}
-              </span>
+              <span className="cart-count">{cartCount}</span>
             )}
           </Link>
 

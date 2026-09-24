@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "../cart/CartProvider";
+import useCartStore from "../cart/cartStore";
 import { validateCheckout } from "./validate";
 
 function Checkout() {
-  const { cart, clearCart } = useCart();
+  const cart = useCartStore((state) => state.cart);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   const [form, setForm] = useState({
     name: "",
@@ -17,6 +18,11 @@ function Checkout() {
 
   const total = cart.reduce(
     (sum, item) => sum + item.priceETB * item.quantity,
+    0
+  );
+
+  const totalItems = cart.reduce(
+    (sum, item) => sum + item.quantity,
     0
   );
 
@@ -42,75 +48,120 @@ function Checkout() {
     }
   }
 
-  if (cart.length === 0) {
-    return (
-      <section>
-        <h1>Checkout</h1>
-        <p>Your cart is empty.</p>
-        <Link to="/menu">Browse the menu</Link>
-      </section>
-    );
-  }
-
   if (submitted) {
     return (
-      <section>
-        <h1>Order received!</h1>
-        <p>Thank you, {form.name}.</p>
-        <p>Your order total is {total} ETB.</p>
+      <section className="order-success">
+        <div className="success-icon" aria-hidden="true">
+          ✓
+        </div>
+
+        <p className="eyebrow">ORDER CONFIRMED</p>
+
+        <h1>Order placed successfully!</h1>
+
+        <p className="success-message">
+          Thank you! Your order has been received.
+        </p>
+
+        <Link to="/menu" className="primary-button">
+          Continue shopping
+        </Link>
       </section>
     );
   }
 
   return (
-    <section>
-      <h1>Checkout</h1>
+    <section className="checkout-page">
+      <div className="checkout-header">
+        <p className="eyebrow">CHECKOUT</p>
+        <h1>Complete your order.</h1>
+        <p>
+          Enter your delivery details and confirm your order.
+        </p>
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Full name</label>
+      <div className="checkout-layout">
 
-          <input
-            id="name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-          />
+        <form className="checkout-form" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name">Full name </label>
 
-          {errors.name && <p>{errors.name}</p>}
-        </div>
+            <input
+              id="name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+            />
 
-        <div>
-          <label htmlFor="telebirr">TeleBirr number</label>
+            {errors.name && <p className="field-error">{errors.name}</p>}
+          </div>
 
-          <input
-            id="telebirr"
-            name="telebirr"
-            value={form.telebirr}
-            onChange={handleChange}
-            placeholder="09XXXXXXXX"
-          />
+          <div>
+            <label htmlFor="telebirr">TeleBirr number </label>
 
-          {errors.telebirr && <p>{errors.telebirr}</p>}
-        </div>
+            <input
+              id="telebirr"
+              name="telebirr"
+              value={form.telebirr}
+              onChange={handleChange}
+              placeholder="09XXXXXXXX"
+            />
 
-        <div>
-          <label htmlFor="area">Delivery area</label>
+            {errors.telebirr && <p className="field-error">{errors.telebirr}</p>}
+          </div>
 
-          <input
-            id="area"
-            name="area"
-            value={form.area}
-            onChange={handleChange}
-          />
+          <div>
+            <label htmlFor="area">Delivery area </label>
 
-          {errors.area && <p>{errors.area}</p>}
-        </div>
+            <textarea
+              id="area"
+              name="area"
+              value={form.area}
+              onChange={handleChange}
+            />
 
-        <h2>Total: {total} ETB</h2>
+            {errors.area && <p className="field-error">{errors.area}</p>}
+          </div>
 
-        <button type="submit">Place order</button>
-      </form>
+          <h2>Total: {total} ETB</h2>
+
+          <button type="submit" className="primary-button checkout-submit">
+            Place Order
+          </button>
+        </form>
+
+        <aside className="checkout-summary">
+          <p className="eyebrow">YOUR ORDER</p>
+
+          {cart.map((item) => (
+            <div className="checkout-summary-item" key={item.id}>
+              
+              <div>
+                <strong>{item.nameEn}</strong>
+                <span>
+                  {item.quantity} × {item.priceETB} ETB
+                </span>
+              </div>
+
+              <strong>
+                {item.priceETB * item.quantity} ETB
+              </strong>
+            </div>
+          ))}
+
+          <div className="summary-divider"></div>
+
+          <div className="summary-row">
+            <span>Items</span>
+            <span>{totalItems}</span>
+          </div>
+
+          <div className="summary-total">
+            <span>Total</span>
+            <strong>{total} ETB</strong>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }

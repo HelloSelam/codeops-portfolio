@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-import { useCart } from "./cart/CartProvider";
+import useCartStore from "./cart/cartStore";
 
 function Cart() {
-  const { cart, removeFromCart, increaseItem, decreaseItem, clearCart } = useCart();
-
+  const cart = useCartStore((state) => state.cart);
+  const increaseItem = useCartStore((state) => state.increaseItem);
+  const decreaseItem = useCartStore((state) => state.decreaseItem);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const clearCart = useCartStore((state) => state.clearCart);
+  
   const total = cart.reduce(
     (sum, item) => sum + item.priceETB * item.quantity,
     0

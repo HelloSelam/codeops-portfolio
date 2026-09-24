@@ -1,8 +1,19 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "../cart/CartProvider";
+import useCartStore from "../cart/cartStore";
 
 function DishCard({ dish }) {
-  const { addToCart } = useCart();
+  const addToCart = useCartStore((state) => state.addToCart);
+  const [added, setAdded] = useState(false);
+
+  function handleAddToCart() {
+    addToCart(dish);
+    setAdded(true);
+
+    setTimeout(() => {
+      setAdded(false);
+    }, 1200);
+  }
 
   return (
     <article className="dish-card">
@@ -42,9 +53,9 @@ function DishCard({ dish }) {
 
         <button
           className="primary-button card-cart-button"
-          onClick={() => addToCart(dish)}
+          onClick={handleAddToCart}
         >
-          Add to Cart
+          {added ? "Added ✓" : "Add to Cart"}
         </button>
       </div>
     </article>
