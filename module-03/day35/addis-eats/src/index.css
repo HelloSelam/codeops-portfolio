@@ -1038,11 +1038,8 @@ a {
   font-weight: 400;
 }
 
-.success-message {
-  max-width: 500px;
-  margin: 0 auto 30px;
-  color: var(--muted);
-  line-height: 1.7;
+.order-success p {
+  padding-bottom: 48px;
 }
 
 /* error handling */

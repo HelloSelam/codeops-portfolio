@@ -4,6 +4,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+import { authSchema } from "./schema";
 
 function SignIn() {
   const [mode, setMode] = useState("signin");
@@ -14,7 +15,7 @@ function SignIn() {
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const { signIn, signUp } = useAuth();
 
@@ -29,31 +30,44 @@ function SignIn() {
       [name]: value,
     });
 
-    setError("");
+    setErrors((currentErrors) => ({
+      ...currentErrors,
+      [name]: "",
+    }));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
+    const result = authSchema.safeParse(form);
+
+    if (!result.success) {
+      const fieldErrors = {};
+
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0];
+
+        if (field) {
+          fieldErrors[field] = issue.message;
+        }
+      });
+
+      if (mode === "signup" && !form.name.trim()) {
+        fieldErrors.name = "Name is required";
+      }
+
+      setErrors(fieldErrors);
+      return;
+    }
+
     if (mode === "signup" && !form.name.trim()) {
-      setError("Please enter your name.");
+      setErrors({
+        name: "Name is required",
+      });
       return;
     }
 
-    if (!form.email.trim()) {
-      setError("Please enter your email.");
-      return;
-    }
-
-    if (!form.password) {
-      setError("Please enter your password.");
-      return;
-    }
-
-    if (form.password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
+    setErrors({});
 
     if (mode === "signup") {
       signUp(form.name.trim(), form.email.trim());
@@ -64,9 +78,7 @@ function SignIn() {
       );
     }
 
-    const destination =
-      location.state?.from?.pathname || "/";
-
+    const destination = location.state?.from?.pathname || "/";
     navigate(destination, { replace: true });
   }
 
@@ -94,7 +106,7 @@ function SignIn() {
             className={mode === "signin" ? "active" : ""}
             onClick={() => {
               setMode("signin");
-              setError("");
+              setErrors({});
             }}
           >
             Sign In
@@ -105,7 +117,7 @@ function SignIn() {
             className={mode === "signup" ? "active" : ""}
             onClick={() => {
               setMode("signup");
-              setError("");
+              setErrors({});
             }}
           >
             Sign Up
@@ -126,8 +138,13 @@ function SignIn() {
                 type="text"
                 value={form.name}
                 onChange={handleChange}
+                className={errors.name ? "input-error" : ""}
                 placeholder="Your full name"
               />
+
+              {errors.name && (
+                <p className="field-error">{errors.name}</p>
+              )}
             </div>
           )}
 
@@ -142,8 +159,13 @@ function SignIn() {
               type="email"
               value={form.email}
               onChange={handleChange}
+              className={errors.email ? "input-error" : ""}
               placeholder="you@example.com"
             />
+
+            {errors.email && (
+              <p className="field-error">{errors.email}</p>
+            )}
           </div>
 
           <div className="form-field">
@@ -157,15 +179,14 @@ function SignIn() {
               type="password"
               value={form.password}
               onChange={handleChange}
+              className={errors.password ? "input-error" : ""}
               placeholder="At least 6 characters"
             />
-          </div>
 
-          {error && (
-            <p className="form-error">
-              {error}
-            </p>
-          )}
+            {errors.password && (
+              <p className="field-error">{errors.password}</p>
+            )}
+          </div>
 
           <button
             type="submit"

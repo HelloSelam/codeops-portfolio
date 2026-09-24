@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useCartStore from "../cart/cartStore";
-import { validateCheckout } from "./validate";
+import { checkoutSchema } from "./schema";
 
 function Checkout() {
   const cart = useCartStore((state) => state.cart);
@@ -38,14 +38,26 @@ function Checkout() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const validationErrors = validateCheckout(form);
+    const result = checkoutSchema.safeParse(form);
 
-    setErrors(validationErrors);
+    if (!result.success) {
+      const fieldErrors = {};
 
-    if (Object.keys(validationErrors).length === 0) {
-      clearCart();
-      setSubmitted(true);
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0];
+
+        if (field) {
+          fieldErrors[field] = issue.message;
+        }
+      });
+
+      setErrors(fieldErrors);
+      return;
     }
+
+    setErrors({});
+    clearCart();
+    setSubmitted(true);
   }
 
   if (submitted) {
@@ -55,13 +67,9 @@ function Checkout() {
           ✓
         </div>
 
-        <p className="eyebrow">ORDER CONFIRMED</p>
-
         <h1>Order placed successfully!</h1>
 
-        <p className="success-message">
-          Thank you! Your order has been received.
-        </p>
+        <p className="eyebrow">Thank you! Your order has been received.</p>
 
         <Link to="/menu" className="primary-button">
           Continue shopping
