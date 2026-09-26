@@ -16,10 +16,14 @@ function Checkout() {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
 
-  const total = cart.reduce(
+  const subtotal = cart.reduce(
     (sum, item) => sum + item.priceETB * item.quantity,
     0
   );
+
+  const deliveryFee = cart.length > 0 ? 80 : 0;
+
+  const total = subtotal + deliveryFee;
 
   const totalItems = cart.reduce(
     (sum, item) => sum + item.quantity,
@@ -162,6 +166,16 @@ function Checkout() {
           <div className="summary-row">
             <span>Items</span>
             <span>{totalItems}</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Subtotal</span>
+            <span>{subtotal} ETB</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Delivery Fee</span>
+            <span>{deliveryFee} ETB</span>
           </div>
 
           <div className="summary-total">

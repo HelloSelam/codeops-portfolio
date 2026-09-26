@@ -100,30 +100,6 @@ function SignIn() {
             : "Create an account to make ordering easier."}
         </p>
 
-        <div className="auth-tabs">
-          <button
-            type="button"
-            className={mode === "signin" ? "active" : ""}
-            onClick={() => {
-              setMode("signin");
-              setErrors({});
-            }}
-          >
-            Sign In
-          </button>
-
-          <button
-            type="button"
-            className={mode === "signup" ? "active" : ""}
-            onClick={() => {
-              setMode("signup");
-              setErrors({});
-            }}
-          >
-            Sign Up
-          </button>
-        </div>
-
         <form onSubmit={handleSubmit}>
 
           {mode === "signup" && (
@@ -196,6 +172,36 @@ function SignIn() {
               ? "Sign In"
               : "Create Account"}
           </button>
+
+          <p className="auth-switch">
+            {mode === "signin" ? (
+              <>
+                Don't have an account?{" "}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode("signup");
+                    setErrors({});
+                  }}
+                >
+                  Sign Up
+                </button>
+              </>
+            ) : (
+              <>
+                Already have an account?{" "}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode("signin");
+                    setErrors({});
+                  }}
+                >
+                  Login
+                </button>
+              </>
+            )}
+          </p>
 
         </form>
       </div>

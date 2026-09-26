@@ -8,10 +8,14 @@ function Cart() {
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
   
-  const total = cart.reduce(
+  const subtotal = cart.reduce(
     (sum, item) => sum + item.priceETB * item.quantity,
     0
   );
+
+  const deliveryFee = cart.length > 0 ? 80 : 0;
+
+  const total = subtotal + deliveryFee;
 
   const totalItems = cart.reduce(
     (sum, item) => sum + item.quantity,
@@ -114,7 +118,12 @@ function Cart() {
 
           <div className="summary-row">
             <span>Subtotal</span>
-            <span>{total} ETB</span>
+            <span>{subtotal} ETB</span>
+          </div>
+
+          <div className="summary-row">
+            <span>Delivery Fee</span>
+            <span>{deliveryFee} ETB</span>
           </div>
 
           <div className="summary-divider"></div>

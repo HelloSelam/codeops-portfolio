@@ -1,0 +1,55 @@
+/* =========================
+   SHARED COMPONENTS
+   ========================= */
+
+/* EYEBROW */
+
+.eyebrow {
+  margin: 0 0 16px;
+  color: var(--red);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+/* PRIMARY BUTTON */
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  padding: 14px 25px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: var(--white);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.primary-button:hover {
+  opacity: 0.9;
+}
+
+/* STATUS */
+
+.status-message {
+  padding: 30px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* FORM ERRORS */
+
+.field-error {
+  margin: 0;
+  color: var(--red);
+  font-size: 0.8rem;
+}
+
+.input-error {
+  border-color: var(--red) !important;
+}

@@ -16,6 +16,7 @@ function CategoryBar({ categories }) {
     <div className="category-bar">
       {categories.map((category) => (
         <button 
+          type="button"
           key={category}
           className={selectedCategory === category ? "active" : ""}
           onClick={() => handleCategoryChange(category)}

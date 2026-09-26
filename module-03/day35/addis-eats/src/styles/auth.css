@@ -1,0 +1,119 @@
+/* =========================
+   AUTH
+   ========================= */
+
+.auth-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+}
+
+.auth-card {
+  width: min(100%, 480px);
+  padding: 45px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: 0 12px 30px rgba(45, 33, 27, 0.06);
+}
+
+.auth-card h1 {
+  margin: 0 0 15px;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+  font-weight: 400;
+}
+
+.auth-description {
+  margin-bottom: 30px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* FORM */
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--white);
+  color: var(--dark-brown);
+  font: inherit;
+}
+
+.form-field input:focus {
+  border-color: var(--red);
+}
+
+.form-field input.input-error {
+  border-color: var(--red);
+}
+
+.field-error {
+  margin: 0;
+  color: var(--red);
+  font-size: 0.8rem;
+}
+
+/* SUBMIT BUTTON */
+
+.auth-submit {
+  width: 100%;
+  margin-top: 5px;
+}
+
+/* SWITCH BETWEEN SIGN IN / SIGN UP */
+
+.auth-switch {
+  margin: 5px 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.auth-switch button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--red);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-switch button:hover {
+  text-decoration: underline;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .auth-page {
+    padding: 50px 16px;
+  }
+
+  .auth-card {
+    padding: 30px 24px;
+  }
+}

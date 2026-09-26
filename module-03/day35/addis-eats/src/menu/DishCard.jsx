@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useCartStore from "../cart/cartStore";
+import useCartStore from "../cart/cartStore"; 
 
 function DishCard({ dish }) {
   const addToCart = useCartStore((state) => state.addToCart);
@@ -42,21 +42,23 @@ function DishCard({ dish }) {
         </p>
 
         <div className="dish-footer">
-          {dish.isFasting && (
-            <span className="dish-tag">Fasting</span>
-          )}
+          <div className="dish-footer-top">
+            {dish.isFasting && (
+              <span className="dish-tag">Fasting</span>
+            )}
 
-          <Link to={`/menu/${dish.id}`}>
-            View dish →
-          </Link>
+            <Link to={`/menu/${dish.id}`}>
+              View dish →
+            </Link>
+          </div>
+
+          <button
+            className="primary-button card-cart-button"
+            onClick={handleAddToCart}
+          >
+            {added ? "Added ✓" : "Add to Cart"}
+          </button>
         </div>
-
-        <button
-          className="primary-button card-cart-button"
-          onClick={handleAddToCart}
-        >
-          {added ? "Added ✓" : "Add to Cart"}
-        </button>
       </div>
     </article>
   );
