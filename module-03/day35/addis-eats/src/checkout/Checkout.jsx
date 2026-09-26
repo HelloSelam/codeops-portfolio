@@ -101,8 +101,10 @@ function Checkout() {
             <input
               id="name"
               name="name"
+              type="text"
               value={form.name}
               onChange={handleChange}
+              className={errors.name ? "input-error" : ""}
             />
 
             {errors.name && <p className="field-error">{errors.name}</p>}
@@ -114,8 +116,10 @@ function Checkout() {
             <input
               id="telebirr"
               name="telebirr"
+              type="tel"
               value={form.telebirr}
               onChange={handleChange}
+              className={errors.telebirr ? "input-error" : ""}
               placeholder="09XXXXXXXX"
             />
 
@@ -130,12 +134,11 @@ function Checkout() {
               name="area"
               value={form.area}
               onChange={handleChange}
+              className={errors.area ? "input-error" : ""}
             />
 
             {errors.area && <p className="field-error">{errors.area}</p>}
           </div>
-
-          <h2>Total: {total} ETB</h2>
 
           <button type="submit" className="primary-button checkout-submit">
             Place Order

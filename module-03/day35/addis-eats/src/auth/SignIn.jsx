@@ -4,7 +4,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
-import { authSchema } from "./schema";
+import { signInSchema, signUpSchema } from "./schema";
 
 function SignIn() {
   const [mode, setMode] = useState("signin");
@@ -39,7 +39,12 @@ function SignIn() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    const result = authSchema.safeParse(form);
+    const schema =
+    mode === "signup"
+      ? signUpSchema
+      : signInSchema;
+
+    const result = schema.safeParse(form);
 
     if (!result.success) {
       const fieldErrors = {};
@@ -57,13 +62,6 @@ function SignIn() {
       }
 
       setErrors(fieldErrors);
-      return;
-    }
-
-    if (mode === "signup" && !form.name.trim()) {
-      setErrors({
-        name: "Name is required",
-      });
       return;
     }
 

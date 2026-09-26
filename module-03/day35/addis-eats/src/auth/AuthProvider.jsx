@@ -9,32 +9,22 @@ export function AuthProvider({ children }) {
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  function signIn(name, email) {
-    const newUser = {
-      name,
-      email,
-    };
+  function saveUser(name, email) {
+    const newUser = { name, email };
 
     setUser(newUser);
-
     localStorage.setItem(
       "addis-eats-user",
       JSON.stringify(newUser)
     );
   }
 
+  function signIn(name, email) {
+    saveUser(name, email);
+  }
+
   function signUp(name, email) {
-    const newUser = {
-      name,
-      email,
-    };
-
-    setUser(newUser);
-
-    localStorage.setItem(
-      "addis-eats-user",
-      JSON.stringify(newUser)
-    );
+    saveUser(name, email);
   }
 
   function signOut() {

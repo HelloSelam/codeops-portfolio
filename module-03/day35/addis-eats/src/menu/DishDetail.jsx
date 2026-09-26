@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useCartStore from "../cart/cartStore";
+import useFetch from "../hooks/useFetch";
 
 function DishDetail() {
   const { id } = useParams();
 
-  const [dish, setDish] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
+  const { data: dishes, loading, error } =
+    useFetch("/menu.json");
+  
   const addToCart = useCartStore((state) => state.addToCart);
-
   const [added, setAdded] = useState(false);
+  const dish = dishes?.find((item) => item.id === id);
 
   function handleAddToCart() {
     addToCart(dish);
@@ -22,39 +22,18 @@ function DishDetail() {
     }, 1200);
   }
 
-  useEffect(() => {
-    fetch("/menu.json")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to load the dish");
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        const foundDish = data.data.find((item) => item.id === id);
-
-        if (!foundDish) {
-          throw new Error("Dish not found");
-        }
-
-        setDish(foundDish);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [id]);
 
   if (loading) {
-    return <p>Loading dish...</p>;
+    return (
+      <p className="status-message">
+        Loading dish...
+      </p>
+    );
   }
 
-  if (error) {
+  if (error || !dish) {
     return (
-      <section>
+      <section className="status-message">
         <h1>Dish not found</h1>
         <p>Sorry, we couldn't find that dish.</p>
         <Link to="/menu">Back to menu</Link>
@@ -70,8 +49,11 @@ function DishDetail() {
 
       <div className="dish-detail-layout">
         <div className="dish-detail-image">
-          <span>Food Image</span>
-        </div>
+          <img
+            src={dish.image}
+            alt={dish.nameEn}
+          />
+                </div>
 
         <div className="dish-detail-content">
           <p className="eyebrow">{dish.category}</p>
@@ -104,6 +86,7 @@ function DishDetail() {
           </ul>
 
           <button
+            type="button"
             className="primary-button"
             onClick={handleAddToCart}
           >

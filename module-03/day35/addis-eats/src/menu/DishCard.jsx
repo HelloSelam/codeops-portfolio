@@ -18,7 +18,10 @@ function DishCard({ dish }) {
   return (
     <article className="dish-card">
       <div className="dish-image">
-        <span>Food Image</span>
+        <img 
+          src={dish.image}
+          alt={dish.nameEn}
+        />
 
         {dish.isSpecial && (
           <span className="special-badge">Special</span>

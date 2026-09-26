@@ -28,9 +28,9 @@ function Home() {
           </p>
 
           <div className="hero-actions">
-            <Link to="/menu" className="primary-button">
-              Explore Today's Menu
-            </Link>
+            <a href="#today-specials" className="primary-button">
+              Explore Today's Specials
+            </a>
 
             <Link to="/menu" className="secondary-button">
               View Full Menu
@@ -39,11 +39,14 @@ function Home() {
         </div>
 
         <div className="hero-image">
-          <span>Food Image</span>
+          <img
+            src="/images/hero-2.jpg"
+            alt="Traditional Ethiopian dishes served at Addis Eats"
+          />
         </div>
       </section>
 
-      <section className="specials-section">
+      <section className="specials-section" id="today-specials">
         <div className="section-heading">
           <p className="eyebrow">TODAY'S SPECIALS</p>
 

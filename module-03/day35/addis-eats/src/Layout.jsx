@@ -44,6 +44,7 @@ function Layout() {
               </span>
 
               <button
+                type="button"
                 onClick={signOut}
                 className="logout-button"
               >
