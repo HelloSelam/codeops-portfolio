@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { db } from "../../../db";
+import AddToCartButton from "../../../components/AddToCartButton";
 
 export async function generateStaticParams() {
   const dishes = await db.dish.findMany();
@@ -28,7 +29,7 @@ export default async function DishPage({ params }) {
         {dish.available ? "Available" : "Currently unavailable"}
       </p>
 
-      <button>Add to order</button>
+      <AddToCartButton dish={dish} />
     </main>
   );
 }
