@@ -29,7 +29,7 @@ export default async function DishPage({ params }) {
         {dish.available ? "Available" : "Currently unavailable"}
       </p>
 
-      <AddToCartButton dish={dish} />
+      {dish.available && <AddToCartButton dish={dish} />}
     </main>
   );
 }

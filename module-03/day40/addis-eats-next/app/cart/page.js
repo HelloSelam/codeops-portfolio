@@ -22,7 +22,7 @@ export default function CartPage() {
       ) : (
         <>
           {cart.map((item) => (
-            <article key={item.id}>
+            <article className="cart-item" key={item.id}>
               <h2>{item.name}</h2>
               <p>
                 {item.quantity} × {item.price} {item.currency}
