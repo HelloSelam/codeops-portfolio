@@ -1,5 +1,7 @@
 import { db } from "../../db";
 import DishGrid from "../../components/DishGrid";
+import SearchBox from "./SearchBox";
+import { Suspense } from "react";
 
 export const revalidate = 3600;
 
@@ -10,7 +12,15 @@ export default async function MenuPage() {
       <h1>Our Menu</h1>
       <p>Discover delicious Ethiopian dishes made for you.</p>
 
+      <hr /> 
+
+      <h2>Search and Explore</h2> 
+      <Suspense fallback={<p>Loading search...</p>}>
+        <SearchBox />
+      </Suspense>
+
       <DishGrid dishes={dishes} />
+
     </main>
   );
 }
