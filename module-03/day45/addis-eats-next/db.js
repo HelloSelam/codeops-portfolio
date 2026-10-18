@@ -2,46 +2,9 @@
  * In-memory mock database and helper utilities for Addis Eats.
  * Provides data access functions for dishes, orders, and session management.
  */
+import { getMenu } from "./lib/menu";
 
-// Mock dish records
-const mockDishes = [
-  {
-    id: "dish_1",
-    name: "Doro Wat",
-    description: "Traditional spicy chicken stew served with injera and boiled egg.",
-    price: 350,
-    currency: "ETB",
-    category: "Main",
-    available: true,
-  },
-  {
-    id: "dish_2",
-    name: "Beyaynetu",
-    description: "Assorted vegan fasting dishes served on injera.",
-    price: 220,
-    currency: "ETB",
-    category: "Vegetarian",
-    available: true,
-  },
-  {
-    id: "dish_3",
-    name: "Kitfo",
-    description: "Minced beef seasoned with mitmita and niter kibbeh.",
-    price: 400,
-    currency: "ETB",
-    category: "Main",
-    available: true,
-  },
-  {
-    id: "dish_4",
-    name: "Shiro Tegabeno",
-    description: "Rich chickpea flour stew served bubbling hot in a clay pot.",
-    price: 180,
-    currency: "ETB",
-    category: "Vegetarian",
-    available: true,
-  },
-];
+
 
 // In-memory orders store
 const mockOrders = [];
@@ -107,10 +70,11 @@ const mockSessionUser = {
  */
 export const db = {
   dish: {
-    findMany: async () => [...mockDishes],
-    findUnique: async ({ where }) =>
-      mockDishes.find((d) => d.id === where.id) || null,
+    findMany: async () => getMenu(),
+
+    findUnique: async ({ where }) => getDish(where.id),
   },
+
   order: {
     findMany: async () => [...mockOrders],
   },
@@ -120,8 +84,9 @@ export const db = {
  * Fetch a single dish by ID
  */
 export async function getDish(id) {
-  const dish = mockDishes.find((d) => d.id === id);
-  return dish || null;
+  const dishes = await getMenu();
+
+  return dishes.find((dish) => dish.id === id) || null;
 }
 
 /**

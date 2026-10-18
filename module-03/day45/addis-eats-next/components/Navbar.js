@@ -25,6 +25,9 @@ export default function Navbar() {
           <span className="cart-count">{cartCount}</span>
         </Link>
         <Link href="/checkout">Checkout</Link>
+        <Link href="/signin" className="signin-link">
+          Sign In 
+        </Link>
       </nav>
     </header>
   );
