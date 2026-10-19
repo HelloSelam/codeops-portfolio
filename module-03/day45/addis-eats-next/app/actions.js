@@ -1,7 +1,8 @@
 "use server";
 
 import { orderSchema } from "../schema";
-import { createOrder, getDish, getSession } from "../db";
+import { createOrder, getDish } from "../db";
+import { getSession } from "../lib/session";
 
 export async function placeOrder(previousState, formData) {
   const session = await getSession();
@@ -75,8 +76,9 @@ export async function placeOrder(previousState, formData) {
       notes: result.data.notes,
       dishId: dish.id,
       quantity: item.quantity,
-      userId: session.id,
-    });
+    },
+    session.userId
+  );
 
     orders.push(order);
   }

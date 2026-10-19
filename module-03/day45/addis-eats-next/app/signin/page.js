@@ -41,7 +41,8 @@ export default async function SignInPage({ searchParams }) {
             />
           </div>
 
-          <div className="signin-options">
+          <div
+            className="signin-options">
             <label>
               <input type="checkbox" name="remember" />
               Remember me
