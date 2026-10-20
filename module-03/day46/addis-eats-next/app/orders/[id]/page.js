@@ -4,6 +4,7 @@ import { requireAuth } from "../../../lib/auth";
 import OrderStatus from "./OrderStatus";
 
 export default async function OrderPage({ params }) {
+  
   const { id } = await params;
   const session = await requireAuth();
 
@@ -14,4 +15,4 @@ export default async function OrderPage({ params }) {
   }
 
   return <OrderStatus id={id} initial={order} />;
-}
+} 

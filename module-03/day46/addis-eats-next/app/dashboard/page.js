@@ -8,51 +8,38 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const orders = await db.order.findMany();
+  const areas = ["Bole", "Kazanchis", "Megenagna"];
 
-
-  const revenueByNeighborhood = {};
-  const ordersByDay = {};
-
-  for (const order of orders) {
-    const neighborhood = order.neighborhood || order.address?.neighborhood || "Unknown";
-
-    const total = Number(order.total ?? order.totalETB ?? 0);
-
-    revenueByNeighborhood[neighborhood] = (revenueByNeighborhood[neighborhood] || 0) + total;
-
-    const day = order.createdAt
-      ? new Date(order.createdAt).toISOString().slice(0, 10)
-      : "Unknown";
-
-    ordersByDay[day] = (ordersByDay[day] || 0) + 1;
-  }
-
-  const revenueData = Object.entries(revenueByNeighborhood).map(
-    ([neighborhood, revenue]) => ({
-      neighborhood,
-      revenue,
-    })
-  );
-
-  const dailyOrders = Object.entries(ordersByDay)
-  .filter(([day]) => day !== "Unknown")
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([day, count]) => ({
-    day,
-    count,
+  const revenueData = areas.map((area) => ({
+    area,
+    revenue: orders
+    .filter((order) => order.area === area)
+    .reduce((sum, order) => sum + Number(order.total || 0), 0),
   }));
 
-return ( 
-  <main> 
-    <h1>Addis Eats Dashboard</h1>
+  const dailyCounts = {};
 
-    <p>Revenue and order activity across neighbourhoods.</p>
+  for (const order of orders) {
+    if (!order.createdAt) continue;
+    const day = order.createdAt.slice(0, 10);
+    dailyCounts[day] = (dailyCounts[day] || 0) + 1;
+  }
 
-    <RevenueChart
-      revenueData={revenueData}
-      dailyOrders={dailyOrders}
-    />
-  </main>
+  const dailyOrders = Object.entries(dailyCounts)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([day, count]) => ({ day, count }));
+
+  return ( 
+    <main> 
+      <h1>Addis Eats Dashboard</h1>
+
+      <section> 
+        <h2>Revenue by neighbourhood</h2> 
+        <RevenueChart 
+          revenueData={revenueData} 
+          dailyOrders={dailyOrders} 
+        /> 
+      </section>
+    </main>
   );
 }
