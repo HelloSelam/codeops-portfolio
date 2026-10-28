@@ -25,27 +25,35 @@ export default function OrderTable({
     return `/orders?sort=${sort}&dir=${dir}&page=${nextPage}`;
   }
 
+  function sortDirection(field) { 
+    if (sort !== field) return "none"; 
+    return dir === "asc" ? "ascending" : "descending"; 
+  }
+
 return ( 
   <section> 
     <h2>Orders</h2>
     <table>
-      <caption>Your orders, sorted by {sort} in {dir}ending order</caption>
+      <caption>
+        Your orders, sorted by {sort} in{" "} {dir === "asc" ? "ascending" : "descending"} order.
+      </caption>
       <thead>
         <tr>
-          <th scope="col">
-            <Link href={sortHref("id")}>Order</Link>
+          <th scope="col" aria-sort={sortDirection("id")}> 
+            <Link href={sortHref("id")}>Order ID</Link>
           </th>
-          <th scope="col">
+          <th scope="col" aria-sort={sortDirection("total")}> 
             <Link href={sortHref("total")}>Total</Link>
           </th>
-          <th scope="col">
+          <th scope="col" aria-sort={sortDirection("status")}> 
             <Link href={sortHref("status")}>Status</Link>
           </th>
-          <th scope="col">
+          <th scope="col" aria-sort={sortDirection("createdAt")}> 
             <Link href={sortHref("createdAt")}>Created</Link>
           </th>
         </tr>
       </thead>
+
       <tbody>
         {orders.map((order) => (
           <tr key={order.id}>
@@ -71,7 +79,7 @@ return (
         <Link href={pageHref(page - 1)}>Previous</Link>
       )}
 
-      <span> Page {page} of {pages} </span>
+      <span aria-live="polite"> {" "} Page {page} of {pages}{" "} </span>
 
       {page < pages && (
         <Link href={pageHref(page + 1)}>Next</Link>

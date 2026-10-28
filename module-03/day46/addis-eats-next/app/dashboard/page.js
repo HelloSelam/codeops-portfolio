@@ -8,13 +8,14 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
+  const orders = await db.order.findMany();
   const areas = ["Bole", "Kazanchis", "Megenagna"];
 
   const revenueData = areas.map((area) => ({
     area,
     revenue: orders
-    .filter((order) => order.area === area)
-    .reduce((sum, order) => sum + Number(order.total || 0), 0),
+      .filter((order) => order.area === area)
+      .reduce((sum, order) => sum + Number(order.total || 0), 0),
   }));
 
   const dailyCounts = {};
@@ -26,15 +27,14 @@ export default async function DashboardPage() {
   }
 
   const dailyOrders = Object.entries(dailyCounts)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([day, count]) => ({ day, count }));
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([day, count]) => ({ day, count }));
 
   return ( 
     <main> 
       <h1>Addis Eats Dashboard</h1>
 
-      <section> 
-        <h2>Revenue by neighbourhood</h2> 
+      <section>  
         <RevenueChart 
           revenueData={revenueData} 
           dailyOrders={dailyOrders} 

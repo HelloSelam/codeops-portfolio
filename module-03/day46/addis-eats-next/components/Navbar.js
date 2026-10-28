@@ -20,6 +20,7 @@ export default function Navbar() {
       <nav className="main-nav">
         <Link href="/">Home</Link>
         <Link href="/menu">Menu</Link>
+        <Link href="/dashboard">Dashboard</Link>
         <Link href="/cart" className="cart-link">
           Cart
           <span className="cart-count">{cartCount}</span>
