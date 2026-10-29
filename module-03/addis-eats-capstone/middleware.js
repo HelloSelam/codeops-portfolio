@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export function middleware(request) {
   const session = request.cookies.get("session")?.value;
 
-  const protectedRoutes = ["/orders", "/checkout", "/kitchen"];
+  const protectedRoutes = ["/orders", "/checkout"];
 
   const isProtected = protectedRoutes.some(
     (route) =>
@@ -19,5 +19,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/orders/:path*", "/checkout/:path*", "/kitchen/:path*"],
+  matcher: ["/orders/:path*", "/checkout/:path*"],
 };

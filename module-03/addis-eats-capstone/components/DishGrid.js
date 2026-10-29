@@ -40,78 +40,79 @@ export default function DishGrid({ dishes }) {
         ))}
       </nav>
 
-      <div className="menu-grid">
         {filteredDishes.length === 0 ? (
-          <p>No dishes found in this category.</p>
+          <p className="menu-empty">No dishes found in this category.</p>
         ) : (
-          filteredDishes.map((dish) => (
-            <article className="dish-card" key={dish.id}>
-              {dish.image && ( 
-                <div className="dish-image"> 
-                  <Image 
-                    src={dish.image} 
-                    alt={dish.nameEn || dish.name} 
-                    width={400} 
-                    height={260} 
-                    sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" style={{ 
-                      width: "100%", 
-                      height: "220px", 
-                      objectFit: "cover", 
-                    }} 
-                  /> 
-                </div>
-              )}
+          <div className="menu-grid">
+            {filteredDishes.map((dish) => (
+              <article className="dish-card" key={dish.id}>
+                {dish.image && ( 
+                  <div className="dish-image"> 
+                    <Image 
+                      src={dish.image} 
+                      alt={dish.nameEn || dish.name} 
+                      width={400} 
+                      height={260} 
+                      sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" style={{ 
+                        width: "100%", 
+                        height: "220px", 
+                        objectFit: "cover", 
+                      }} 
+                    /> 
+                  </div>
+                )}
 
-              <div className="dish-card-content"> 
-                <h2>{dish.nameEn || dish.name}</h2> 
-                {dish.nameAm && ( 
-                  <p className="dish-name-am"> 
-                    {dish.nameAm} 
-                  </p> 
-                )} 
-                
-                <p>{dish.description}</p> 
-                
-                {dish.spiceLevel && ( 
-                  <p className="dish-spice"> 
-                    Spice: {dish.spiceLevel} 
-                  </p> 
-                )} 
-                
-                {dish.isFasting && ( 
-                  <span className="dish-tag"> 
-                    Fasting 
-                  </span> 
-                )} 
-                
-                {dish.isSpecial && ( 
-                  <span className="dish-tag"> 
-                    Special 
-                  </span> 
-                )} 
-                
-                <p className="dish-price"> 
-                  {dish.priceETB ?? dish.price}{" "} 
-                  {dish.currency || "ETB"} 
-                </p> 
-                
-                <div className="dish-actions"> 
-                  <Link 
-                    href={`/menu/${dish.slug || dish.id}`} 
-                  > 
-                    View Details 
-                  </Link> 
-                  
-                  {dish.available !== false && ( 
-                    <AddToCartButton dish={dish} /> 
+                <div className="dish-card-content"> 
+                  <h2>{dish.nameEn || dish.name}</h2> 
+                  {dish.nameAm && ( 
+                    <p className="dish-name-am"> 
+                      {dish.nameAm} 
+                    </p> 
                   )} 
+                  
+                  <p className="dish-description">{dish.description}</p> 
+                  
+                  {dish.spiceLevel && ( 
+                    <p className="dish-spice"> 
+                      Spice: {dish.spiceLevel} 
+                    </p> 
+                  )} 
+                  
+                  <div className="dish-tags">
+                    {dish.isFasting && ( 
+                      <span className="dish-tag"> 
+                        Fasting 
+                      </span> 
+                    )} 
+                    
+                    {dish.isSpecial && ( 
+                      <span className="dish-tag"> 
+                        Special 
+                      </span> 
+                    )}
+                  </div> 
+                  
+                  <p className="dish-price"> 
+                    {dish.priceETB ?? dish.price}{" "} 
+                    {dish.currency || "ETB"} 
+                  </p> 
+                  
+                  <div className="dish-actions"> 
+                    <Link 
+                      href={`/menu/${dish.slug || dish.id}`} 
+                    > 
+                      View Details 
+                    </Link> 
+                    
+                    {dish.available !== false && ( 
+                      <AddToCartButton dish={dish} /> 
+                    )} 
+                  </div>
                 </div>
-
-              </div>
-            </article>
-          ))
+              </article>
+            ))}
+          </div>
         )}
-      </div>
     </div>
   );
 }

@@ -1,91 +1,121 @@
 "use server";
 
-import { orderSchema } from "../schema";
+import { orderSchema, orderItemsSchema } from "../schema";
 import { createOrder, getDish } from "../db";
 import { getSession } from "../lib/session";
 
 export async function placeOrder(previousState, formData) {
   const session = await getSession();
 
-  if (!session) {
+  if (!session?.userId) {
     return {
       success: false,
       error: "You must be logged in to place an order.",
+      fieldErrors: {},
     };
   }
 
-  const rawData = {
-    name: formData.get("name"),
-    phone: formData.get("phone"),
-    notes: formData.get("notes") || undefined,
-  };
-
-  const result = orderSchema.safeParse(rawData);
-
-  if (!result.success) {
-    return {
+  const customerResult = orderSchema.safeParse({ 
+    name: formData.get("name"), 
+    phone: formData.get("phone"), 
+    notes: formData.get("notes") || "", 
+  }); 
+  
+  if (!customerResult.success) { 
+    return { 
       success: false,
-      fieldErrors: result.error.flatten().fieldErrors,
+      error: null, 
+      fieldErrors: customerResult.error.flatten().fieldErrors, 
     };
+  } 
+  
+  let submittedCart; 
+  
+  try { 
+    submittedCart = JSON.parse(formData.get("cart") || "[]"); 
+  } catch { 
+    return { 
+      success: false, 
+      error: "Your cart could not be read. Please review your order.", 
+      fieldErrors: {}, 
+    }; 
   }
 
-  let cart;
-
-  try {
-    cart = JSON.parse(formData.get("cart") || "[]");
-  } catch {
-    return {
-      success: false,
-      error: "Your cart is invalid. Please review your order.",
-    };
-  }
-
-  if (!Array.isArray(cart) || cart.length === 0) {
-    return {
-      success: false,
-      error: "Your cart is empty.",
-    };
-  }
-
-  const orders = [];
-
-  for (const item of cart) {
-    if (
-      typeof item.id !== "string" ||
-      !Number.isInteger(item.quantity) ||
-      item.quantity < 1
-    ) {
-      return {
-        success: false,
-        error: "Your cart contains an invalid item.",
-      };
-    }
-
-    const dish = await getDish(item.id);
-
-    if (!dish || !dish.available) {
-      return {
-        success: false,
-        error: "One of your selected dishes is unavailable.",
-      };
-    }
-
-    const order = await createOrder({
-      name: result.data.name,
-      phone: result.data.phone,
-      notes: result.data.notes,
-      dishId: dish.id,
-      quantity: item.quantity,
-    },
-    session.userId
-  );
-
-    orders.push(order);
-  }
-
-  return {
-    success: true,
-    order: orders[0],
-    orderCount: orders.length,
-  };
+  const cartResult = orderItemsSchema.safeParse( 
+    Array.isArray(submittedCart) 
+      ? submittedCart.map((item) => ({ 
+          id: item?.id, 
+          quantity: item?.quantity, 
+        })) 
+      : submittedCart 
+  ); 
+  
+  if (!cartResult.success) { 
+    return { 
+      success: false, 
+      error: cartResult.error.issues[0]?.message || "Your cart is invalid.", 
+      fieldErrors: {}, 
+    }; 
+  } 
+  
+  const items = []; 
+  let total = 0; 
+  
+  for (const cartItem of cartResult.data) { 
+    const dish = await getDish(cartItem.id); 
+    
+    if (!dish || dish.available === false) { 
+      return { 
+        success: false, 
+        error: "One or more dishes are unavailable. Please review your cart.", 
+        fieldErrors: {}, 
+      }; 
+    } 
+    
+    const price = Number(dish.price ?? dish.priceETB); 
+    
+    if (!Number.isFinite(price) || price < 0) { 
+      return { 
+        success: false, 
+        error: "We couldn't verify a dish price. Please try again later.", 
+        fieldErrors: {}, 
+      }; 
+    } 
+      
+    items.push({ 
+      dishId: dish.id, 
+      name: dish.name ?? dish.nameEn, 
+      quantity: cartItem.quantity, 
+      price, 
+      subtotal: price * cartItem.quantity, 
+    }); 
+    
+    total += price * cartItem.quantity; 
+  } 
+    
+  try { 
+    const order = await createOrder( 
+      { 
+        name: customerResult.data.name, 
+        phone: customerResult.data.phone, 
+        notes: customerResult.data.notes, 
+        items, 
+        total, 
+        area: "Unspecified", 
+      }, 
+      session.userId 
+    ); 
+      
+    return { 
+      success: true, 
+      order, 
+      fieldErrors: {}, 
+    }; 
+  } catch { 
+    return { 
+      success: false, 
+      error: "We couldn't place your order. Please try again.", 
+      fieldErrors: {}, 
+    }; 
+  } 
 }

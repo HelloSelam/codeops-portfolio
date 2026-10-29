@@ -13,13 +13,56 @@ const mockUser = {
 };
 
 export async function signIn(formData) {
-  const email = formData.get("email");
+  const email = String(formData.get("email") || "")
+    .trim()
+    .toLowerCase();
 
-  if (email !== mockUser.email) {
+  const password = String(formData.get("password") || "");
+
+  const customerEmail = process.env.DEMO_CUSTOMER_EMAIL?.toLowerCase();
+  const customerPassword = process.env.DEMO_CUSTOMER_PASSWORD;
+
+  const staffEmail = process.env.DEMO_STAFF_EMAIL?.toLowerCase();
+  const staffPassword = process.env.DEMO_STAFF_PASSWORD;
+
+  let user;
+
+  if (
+    customerEmail &&
+    customerPassword &&
+    email === customerEmail &&
+    password === customerPassword
+  ) {
+    user = {
+      id: "user_addis_101",
+      name: "Abebe Bikila",
+      email: customerEmail,
+      role: "customer",
+    };
+  } else if (
+    staffEmail &&
+    staffPassword &&
+    email === staffEmail &&
+    password === staffPassword
+  ) {
+    user = {
+      id: "user_addis_staff",
+      name: "Addis Eats Staff",
+      email: staffEmail,
+      role: "staff",
+    };
+  }
+
+  if (!user) {
     redirect("/signin?error=invalid");
   }
 
-  await createSession(mockUser);
+  await createSession(user);
+
+  if (user.role === "staff") {
+    redirect("/dashboard");
+  }
+
   redirect("/orders");
 }
 

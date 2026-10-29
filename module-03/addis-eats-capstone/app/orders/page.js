@@ -2,12 +2,17 @@ import { requireAuth } from "../../lib/auth";
 import { getOrdersFor } from "../../db";
 import { signOut } from "../action";
 import OrderTable from "./OrderTable";
+import { redirect } from "next/navigation";
 
 const PAGE_SIZE = 5; 
 const SORT_FIELDS = ["id", "total", "status", "createdAt"];
 
 export default async function OrdersPage({ searchParams }) {
   const session = await requireAuth();
+  if (session.role === "staff") {
+    redirect("/dashboard");
+  }
+
   const allOrders = await getOrdersFor(session.userId); 
   const params = await searchParams; 
 

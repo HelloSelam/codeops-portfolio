@@ -35,7 +35,9 @@ export default function CheckoutForm() {
       <section className="order-success">
         <h2>Order placed successfully!</h2>
         <p>Thank you for ordering with Addis Eats.</p>
-        <p>Order ID: {state.order?.id}</p>
+        <p>
+          Total: {Number(state.order?.total ?? 0).toLocaleString()} ETB
+        </p>
       </section>
     );
   }

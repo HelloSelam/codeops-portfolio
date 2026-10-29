@@ -16,7 +16,7 @@ export async function requireStaff() {
   const session = await requireAuth();
 
   if (session.role !== "staff") {
-    redirect("/");
+    redirect("/orders");
   }
 
   return session;

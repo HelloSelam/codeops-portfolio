@@ -1,9 +1,18 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { signIn } from "../action";
+import { getSession } from "../../lib/session";
 
 export default async function SignInPage({ searchParams }) {
+  const session = await getSession(); 
+  
+  if (session?.userId) { 
+    redirect(session.role === "staff" ? "/dashboard" : "/orders"); 
+  }
+
   const params = await searchParams;
   const hasError = params?.error === "invalid";
+
   return (
     <main className="signin-page">
       <section className="signin-card">
@@ -41,16 +50,6 @@ export default async function SignInPage({ searchParams }) {
             />
           </div>
 
-          <div
-            className="signin-options">
-            <label>
-              <input type="checkbox" name="remember" />
-              Remember me
-            </label>
-
-            <Link href="/signin">Forgot password?</Link>
-          </div>
-
           <button type="submit">Sign In</button>
         </form>
 
@@ -59,6 +58,5 @@ export default async function SignInPage({ searchParams }) {
         </p>
       </section>
     </main>
-
   );
 }

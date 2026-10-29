@@ -50,59 +50,83 @@ export default async function DishPage({ params }) {
 
   return (
     <main className="dish-details">
-      <Link href="/menu">← Back to Menu</Link>
+      <Link href="/menu" className="dish-back-link">
+        ← Back to Menu
+      </Link>
 
-      {dish.image && (
-        <Image
-          src={dish.image}
-          alt={name}
-          width={800}
-          height={500}
-          priority
-          style={{
-            width: "100%",
-            maxWidth: "700px",
-            height: "auto",
-            objectFit: "cover",
-          }}
-        />
-      )}
+      <div className="dish-details-layout">
+        <div className="dish-details-image">
+          {dish.image && (
+            <Image
+              src={dish.image}
+              alt={name}
+              width={800}
+              height={600}
+              priority
+              sizes="(max-width: 760px) 100vw, 50vw"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          )}
+        </div>
 
-      <h1>{name}</h1>
+        <section className="dish-details-info">
+          <span className="dish-category">
+            {dish.category || "Ethiopian cuisine"}
+          </span>
 
-      {dish.nameAm && <p>{dish.nameAm}</p>}
+          <h1>{name}</h1>
 
-      <p>{dish.description}</p>
+          {dish.nameAm && (
+            <p className="dish-amharic-name">{dish.nameAm}</p>
+          )}
 
-      <h2>
-        {price} {dish.currency || "ETB"}
-      </h2>
+          <p className="dish-details-description">
+            {dish.description || "Discover this Ethiopian favourite."}
+          </p>
 
-      <p>Category: {dish.category}</p>
+          <p className="dish-details-price">
+            {Number(price).toLocaleString()} {dish.currency || "ETB"}
+          </p>
 
-      {dish.spiceLevel && <p>Spice level: {dish.spiceLevel}</p>}
+          <p className={dish.available === false ? "availability-unavailable" : "availability-available"}>
+            {dish.available === false
+              ? "Currently unavailable"
+              : "Available to order"}
+          </p>
 
-      {dish.servings && <p>Servings: {dish.servings}</p>}
+          {dish.available !== false && (
+            <AddToCartButton dish={dish} />
+          )}
+
+          <div className="dish-extra-details">
+            {dish.spiceLevel && (
+              <p>
+                <strong>Spice level:</strong> {dish.spiceLevel}
+              </p>
+            )}
+
+            {dish.servings && (
+              <p>
+                <strong>Servings:</strong> {dish.servings}
+              </p>
+            )}
+          </div>
+        </section>
+      </div>
 
       {dish.ingredients?.length > 0 && (
-        <>
+        <section className="dish-ingredients">
           <h2>Ingredients</h2>
           <ul>
             {dish.ingredients.map((ingredient) => (
               <li key={ingredient}>{ingredient}</li>
             ))}
           </ul>
-        </>
-      )}
-
-      <p>
-        {dish.available === false
-          ? "Currently unavailable"
-          : "Available"}
-      </p>
-
-      {dish.available !== false && (
-        <AddToCartButton dish={dish} />
+        </section>
       )}
     </main>
   );

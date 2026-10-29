@@ -116,8 +116,8 @@ export async function createOrder(data, userId) {
   const newOrder = {
     id: `ord_${crypto.randomUUID()}`,
     ...data,
-    status: "PENDING",
     userId,
+    status: "PENDING",
     createdAt: new Date().toISOString(),
   };
 
