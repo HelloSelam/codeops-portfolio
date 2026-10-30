@@ -6,7 +6,6 @@ Addis Eats is an Ethiopian food ordering application built with Next.js. Custome
 
 **Vercel URL:** https://addis-eats-capstone-six.vercel.app
 
-Replace this placeholder with the production URL after deployment.
 
 ## Features
 
@@ -35,13 +34,13 @@ Replace this placeholder with the production URL after deployment.
 1. Clone the repository:
 
    ```bash
-   git clone YOUR_GITHUB_REPOSITORY_URL
+   git clone https://github.com/HelloSelam/codeops-portfolio/tree/master/module-03/addis-eats-capstone
    ```
 
 2. Open the project directory:
 
    ```bash
-   cd YOUR_PROJECT_DIRECTORY
+   cd addis-eats-capstone
    ```
 
 3. Install dependencies:
