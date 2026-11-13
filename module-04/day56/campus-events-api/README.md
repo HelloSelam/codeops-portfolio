@@ -43,7 +43,7 @@ src/
 Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/HelloSelam/codeops-portfolio/tree/master/module-04/day56/campus-events-api
 ```
 
 Navigate into the project:
