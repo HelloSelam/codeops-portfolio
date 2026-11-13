@@ -1,0 +1,13 @@
+{
+  "name": "day53",
+  "version": "1.0.0",
+  "description": "Day 53 TypeScript backend exercise",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
